@@ -48,6 +48,7 @@
           </div>
           <!-- /.box-footer -->
         </form>
+        <!-- /.form end -->
       </div>
       <!-- /.box -->
     </section>

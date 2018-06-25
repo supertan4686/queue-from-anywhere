@@ -14,11 +14,9 @@
           <div class="box">
             <div class="box-header">
               <div class="row">
-                <div class="col-xs-12">
+                <div class="col-xs-10">
                   <h2 class="box-title">ตารางรายการข้อมูลพนักงาน</h2>
                 </div>
-              </div>
-              <div class="row">
                 <div class="col-xs-2">
                   <button type="button" class="btn btn-block btn-success" data-toggle="modal" data-target="#formEmployeeModal"> <i class="fa fa-plus"></i> <span>เพิ่มพนักงาน</span></button>
                 </div>
@@ -81,17 +79,51 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel">Edit Form</h4>
+            <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
+            <h4 class="modal-title" id="myModalLabel">เพิ่มหรือแก้ไขข้อมูลพนักงาน</h4>
           </div>
           <div class="modal-body">
             <div class="container-fluid">
-              
+              <!-- form start -->
+              <form class="form-horizontal">
+                <div class="box-body">
+                  <!-- รหัสพนักงาน -->
+                  <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-3 control-label">รหัสพนักงาน</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="inputEmail3" placeholder="">
+                    </div>
+                  </div>
+                  <!-- /.จบรหัสพนักงาน -->
+                  <!-- ชื่อพนักงาน -->
+                  <div class="form-group">
+                    <label for="inputPassword3" class="col-sm-3 control-label">ชื่อพนักงาน</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="inputPassword3" placeholder="">
+                    </div>
+                  </div>
+                  <!-- /.จบชื่อพนักงาน -->
+                  <!-- ตำแหน่ง -->
+                  <div class="form-group">
+                    <label for="inputPassword3" class="col-sm-3 control-label">ตำแหน่ง</label>
+                    <div class="col-sm-9">
+                      <select class="form-control select2" style="width: 100%;">
+                        <option selected="selected">พนักงานชำระค่าไฟฟ้า</option>
+                        <option>ช่างไฟฟ้า</option>
+                        <option>สารสนเทศองค์กร</option>
+                      </select>
+                    </div>
+                  </div>
+                  <!-- /.จบตำแหน่ง -->
+                </div>
+                <!-- /.box-body -->
+              </form>
+              <!-- /.form end -->
             </div>
-          </>
+          </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+            <button type="button" class="btn btn-primary">บันทึก</button>
           </div>
         </div>
       </div>
@@ -103,20 +135,20 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel">Delete</h4>
+            <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
+            <h4 class="modal-title" id="myModalLabel">ลบข้อมูลกลุ่มงานบริการ</h4>
           </div>
           <div class="modal-body">
-            ...
+            <p>คุณต้องการลบข้อมูลกลุ่มงานบริการนี้จริงๆหรือไม่ ?</p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+            <button type="button" class="btn btn-danger">ลบ</button>
           </div>
         </div>
       </div>
     </div>
-    <!-- /.Modal add Edit -->
+    <!-- /.Modal Delete -->
 
   </div>
   <!-- /.content-wrapper -->
