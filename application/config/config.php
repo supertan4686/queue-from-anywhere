@@ -31,7 +31,7 @@ if(!empty($_SERVER['REQUEST_SCHEME'])){
 			$config['base_url'] .= implode('/', array_slice(explode('/', $_SERVER['SCRIPT_NAME']), 1, -1)).'/';
 		}
 	} else {
-		$config['base_url'] .= 'stat-employee' . '/';
+		$config['base_url'] .= 'queue-from-anywhere' . '/';
 	}
 }else{
 	$config['base_url'] = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on' ? 'https': 'http').'://'.$_SERVER['HTTP_HOST'];
