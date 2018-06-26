@@ -66,7 +66,7 @@ desired effect
   <header class="main-header">
 
     <!-- Logo -->
-    <a href="<?php echo site_url();?>" class="logo">
+    <a href="#" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini">PEA</span>
       <!-- logo for regular state and mobile devices -->
@@ -74,7 +74,7 @@ desired effect
     </a>
 
     <!-- input hidden -->
-    <input type="hidden" id="adminid" value="<?php echo $admin_id?>">
+    <input type="hidden" id="adminid" value="<?php echo isset($admin_id) ? $admin_id : '';?>">
     <!-- /.input hidden -->
 
     <!-- Header Navbar -->
@@ -123,13 +123,16 @@ desired effect
     $("#logoutbtn").on('click', function (e) {
       e.preventDefault();
       var adminid = $("#adminid").val();
+      var url = "<?php echo base_url();?>";
+      console.log(adminid);
       $.ajax({
         url: url +'admin/ajax_logout',
         type:'POST',
         data: {
-          adminid : admin
+          adminid : adminid
         },
         success: function (msg) {
+          console.log(msg);
           if(msg == "Success"){
             window.location = url + 'admin/login';
           }

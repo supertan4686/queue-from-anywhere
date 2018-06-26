@@ -50,6 +50,7 @@
         type:'POST',
         data: data,
         success: function (msg) {
+          console.log(msg);
           if(msg == "Success"){
             window.location = url + 'admin';
           }

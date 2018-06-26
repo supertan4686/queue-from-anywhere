@@ -37,8 +37,9 @@ class Admin_model extends CI_Model {
   }
   function delete_session ($admin_id, $token) {
     setcookie("peastat", "", -1, "/");
-    $this->db->where('admin_id', admin_id);
+    $this->db->where('admin_id', $admin_id);
     $this->db->where('token', $token);
+    $this->db->delete('admin_session');
     if($this->db->affected_rows() == 1){
       return true;
     } else {

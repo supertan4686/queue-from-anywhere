@@ -33,14 +33,14 @@ class Admin extends CI_Controller {
   }
 
   public function login(){
+    $data = array(
+      'pageactive' => 'admin'
+    );
     if($this->_check_cookie()){
       $cookie = $_COOKIE[$this->cookie_name];
       $token = explode(" ", $cookie)[1];
       $admin_id = $this->Admin_model->get_admin_id_by_token($token);
       if($admin_id == NULL){
-        $data = array(
-          'pageactive' => 'admin'
-        );
         $this->load->view('template/header');
         $this->load->view('template/sidebar', $data);
         $this->load->view('login');
@@ -50,7 +50,7 @@ class Admin extends CI_Controller {
       }
     } else {
       $this->load->view('template/header');
-      $this->load->view('template/sidebar');
+      $this->load->view('template/sidebar', $data);
       $this->load->view('login');
       $this->load->view('template/footer');  
     }
@@ -58,11 +58,23 @@ class Admin extends CI_Controller {
 
   public function employee(){
     if($this->_check_cookie()){
-      $pageactive = array('pageactive'=>'employee');
-      $this->load->view('template/header');
-      $this->load->view('template/sidebar_admin', $pageactive);
-      $this->load->view('employee');
-      $this->load->view('template/footer');
+      $cookie = $_COOKIE[$this->cookie_name];
+      $token = explode(" ", $cookie)[1];
+      $admin_id = $this->Admin_model->get_admin_id_by_token($token);
+      if($admin_id == NULL){
+        header("location: " . site_url('admin/login'));
+      } else {
+        $admin =  $this->Admin_model->get_admin_by_id($admin_id);
+        $data = array(
+          'pageactive' => 'employee',
+          'admin_id' => $admin_id,
+          'admin' => $admin
+        );
+        $this->load->view('template/header', $data);
+        $this->load->view('template/sidebar_admin');
+        $this->load->view('employee');
+        $this->load->view('template/footer');
+      }
     } else {
       header("location: " . site_url('admin/login'));
     }
@@ -70,11 +82,23 @@ class Admin extends CI_Controller {
 
   public function service(){
     if($this->_check_cookie()){
-      $pageactive = array('pageactive'=>'service');
-      $this->load->view('template/header');
-      $this->load->view('template/sidebar_admin', $pageactive);
-      $this->load->view('service');
-      $this->load->view('template/footer');
+      $cookie = $_COOKIE[$this->cookie_name];
+      $token = explode(" ", $cookie)[1];
+      $admin_id = $this->Admin_model->get_admin_id_by_token($token);
+      if($admin_id == NULL){
+        header("location: " . site_url('admin/login'));
+      } else {
+        $admin =  $this->Admin_model->get_admin_by_id($admin_id);
+        $data = array(
+          'pageactive' => 'service',
+          'admin_id' => $admin_id,
+          'admin' => $admin
+        );
+        $this->load->view('template/header', $data);
+        $this->load->view('template/sidebar_admin');
+        $this->load->view('service');
+        $this->load->view('template/footer');
+      }
     } else {
       header("location: " . site_url('admin/login'));
     }
@@ -103,12 +127,11 @@ class Admin extends CI_Controller {
     $admin_id = $this->input->post('adminid');
     $cookie = $_COOKIE[$this->cookie_name];
     $token = explode(" ", $cookie)[1];
-    if ($this->Admin_model->delete_session($adminid, $token)) {
+    if ($this->Admin_model->delete_session($admin_id, $token)) {
       echo 'Success';
     } else {
       echo 'Fail';
     }
-
   }
 
   public function checktoken(){
