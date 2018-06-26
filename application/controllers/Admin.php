@@ -18,7 +18,7 @@ class Admin extends CI_Controller {
       } else {
         $admin =  $this->Admin_model->get_admin_by_id($admin_id);
         $data = array(
-          'pageactive' => 'admin',
+          'pageactive' => 'stat',
           'admin_id' => $admin_id,
           'admin' => $admin
         );
@@ -34,23 +34,24 @@ class Admin extends CI_Controller {
 
   public function login(){
     $data = array(
-      'pageactive' => 'admin'
+      'pageactive' => 'login'
     );
+
     if($this->_check_cookie()){
       $cookie = $_COOKIE[$this->cookie_name];
       $token = explode(" ", $cookie)[1];
       $admin_id = $this->Admin_model->get_admin_id_by_token($token);
       if($admin_id == NULL){
-        $this->load->view('template/header');
-        $this->load->view('template/sidebar', $data);
+        $this->load->view('template/header', $data);
+        $this->load->view('template/sidebar');
         $this->load->view('login');
         $this->load->view('template/footer');  
       } else {
         header("location: " . site_url('admin'));
       }
     } else {
-      $this->load->view('template/header');
-      $this->load->view('template/sidebar', $data);
+      $this->load->view('template/header', $data);
+      $this->load->view('template/sidebar');
       $this->load->view('login');
       $this->load->view('template/footer');  
     }

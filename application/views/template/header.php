@@ -109,7 +109,7 @@ desired effect
                   <a href="<?php echo base_url() . "assets/AdminLTE-2.4.3/"?>#" class="btn btn-default btn-flat">Profile</a>
                 </div> -->
                 <div class="pull-right">
-                  <a href="" class="btn btn-default btn-flat" id="logoutbtn">ออกจากระบบ</a>
+                  <button class="btn btn-default btn-flat" id="<?php echo isset($admin_id) ? 'logoutbtn' : 'loginbtn';?>"><?php echo isset($admin_id) ? 'ออกจากระบบ' : 'เข้าสู่ระบบ';?></a>
                 </div>
               </li>
             </ul>
@@ -138,6 +138,13 @@ desired effect
           }
         }
       }); 
+    });
+
+    $("#loginbtn").on('click', function (e) {
+      e.preventDefault();
+      var url = "<?php echo base_url();?>";
+      console.log('ok');
+      window.location = url + 'admin/login';
     });
   </script>
   

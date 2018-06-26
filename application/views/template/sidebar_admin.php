@@ -18,7 +18,7 @@
   <ul class="sidebar-menu" data-widget="tree">
     <li class="header">เมนู</li>
     <!-- Optionally, you can add icons to the links -->
-    <li class="<?php echo ($pageactive == "admin") ? "active" : "";?>"><a href="<?php echo site_url('admin');?>"><i class="fa fa-table"></i> <span>ตารางสถิติข้อมูลพนักงาน</span></a></li>
+    <li class="<?php echo ($pageactive == "stat") ? "active" : "";?>"><a href="<?php echo site_url('admin');?>"><i class="fa fa-table"></i> <span>ตารางสถิติข้อมูลพนักงาน</span></a></li>
     <li class="<?php echo ($pageactive == "employee") ? "active" : "";?>"><a href="<?php echo site_url('admin/employee');?>"><i class="fa fa-users"></i> <span>ข้อมูลพนักงาน</span></a></li>
     <li class="<?php echo ($pageactive == "service") ? "active" : "";?>"><a href="<?php echo site_url('admin/service');?>"><i class="fa fa-bolt"></i> <span>ข้อมูลงานบริการ</span></a></li>
   </ul>
