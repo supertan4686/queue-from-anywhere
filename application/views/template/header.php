@@ -35,6 +35,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Google Font -->
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <!-- jQuery 3 -->
+  <script src="<?php echo base_url() . "assets/AdminLTE-2.4.3/"?>bower_components/jquery/dist/jquery.min.js"></script>
+
 </head>
 <!--
 BODY TAG OPTIONS:
@@ -70,6 +73,10 @@ desired effect
       <span class="logo-lg"><b>PEA System</span>
     </a>
 
+    <!-- input hidden -->
+    <input type="hidden" id="adminid" value="<?php echo $admin_id?>">
+    <!-- /.input hidden -->
+
     <!-- Header Navbar -->
     <nav class="navbar navbar-static-top" role="navigation">
       <!-- Sidebar toggle button-->
@@ -86,16 +93,14 @@ desired effect
               <!-- The user image in the navbar-->
               <img src="<?php echo base_url() . "assets/pic/"?>PEA-logo.jpg" class="user-image" alt="User Image">
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
-              <span class="hidden-xs">Admin</span>
+              <span class="hidden-xs"><?php echo isset($admin) ? $admin : 'Guest';?></span>
             </a>
             <ul class="dropdown-menu">
               <!-- The user image in the menu -->
               <li class="user-header">
                 <img src="<?php echo base_url() . "assets/pic/"?>PEA-logo.jpg" class="img-circle" alt="User Image">
-
                 <p>
-                  Admin
-                  <small>Admin description</small>
+                  <?php echo isset($admin) ? $admin : 'Guest';?>
                 </p>
               </li>
               <!-- Menu Footer-->
@@ -104,7 +109,7 @@ desired effect
                   <a href="<?php echo base_url() . "assets/AdminLTE-2.4.3/"?>#" class="btn btn-default btn-flat">Profile</a>
                 </div> -->
                 <div class="pull-right">
-                  <a href="<?php echo base_url() . "assets/AdminLTE-2.4.3/"?>#" class="btn btn-default btn-flat">Sign out</a>
+                  <a href="" class="btn btn-default btn-flat" id="logoutbtn">ออกจากระบบ</a>
                 </div>
               </li>
             </ul>
@@ -113,5 +118,24 @@ desired effect
       </div>
     </nav>
   </header>
+
+  <script>
+    $("#logoutbtn").on('click', function (e) {
+      e.preventDefault();
+      var adminid = $("#adminid").val();
+      $.ajax({
+        url: url +'admin/ajax_logout',
+        type:'POST',
+        data: {
+          adminid : admin
+        },
+        success: function (msg) {
+          if(msg == "Success"){
+            window.location = url + 'admin/login';
+          }
+        }
+      }); 
+    });
+  </script>
   
 

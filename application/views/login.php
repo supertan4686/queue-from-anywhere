@@ -9,49 +9,51 @@
 
     <!-- Main content -->
     <section class="content">
-      <!-- Horizontal Form -->
-      <div class="box box-info">
-        <div class="box-header with-border">
-          <h3 class="box-title">เข้าสู่ระบบ Admin</h3>
+      <div class="login-box">
+        <div class="login-box-body">
+          <p class="login-box-msg">เข้าสู่ระบบ Admin</p>
+          <form id="formlogin" method="post" action="#">
+            <div class="input-group">
+              <span class="input-group-addon"><i class="fa fa-user"></i></span>
+              <input type="text" class="form-control" name="username" placeholder="Username">
+            </div>
+            <br>
+            <div class="input-group">
+              <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+              <input type="password" class="form-control" name="password" placeholder="Password">
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-xs-8">
+              </div>
+              <!-- /.col -->
+              <div class="col-xs-4">
+                <button type="submit" class="btn btn-primary btn-block" id="loginbtn">Sign In</button>
+              </div>
+              <!-- /.col -->
+            </div>
+          </form>
         </div>
-        <!-- /.box-header -->
-        <!-- form start -->
-        <form class="form-horizontal">
-          <div class="box-body">
-            <div class="form-group">
-              <label for="inputEmail3" class="col-sm-2 control-label">Username</label>
-
-              <div class="col-sm-10">
-                <input type="email" class="form-control" id="inputEmail3" placeholder="Username">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
-
-              <div class="col-sm-10">
-                <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="col-sm-offset-2 col-sm-10">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"> Remember me
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- /.box-body -->
-          <div class="box-footer">
-            <button type="submit" class="btn btn-info pull-right">Sign in</button>
-          </div>
-          <!-- /.box-footer -->
-        </form>
-        <!-- /.form end -->
+        <!-- /.login-box-body -->
       </div>
-      <!-- /.box -->
-    </section>
-    <!-- /.content -->
+      <!-- /.login-box -->
   </div>
   <!-- /.content-wrapper -->
+
+  <script>
+    $("#formlogin").submit(function (e) {
+      e.preventDefault();
+      var data = $('#formlogin').serialize();
+      var url = "<?php echo base_url();?>";
+      $.ajax({
+        url: url +'admin/ajax_login',
+        type:'POST',
+        data: data,
+        success: function (msg) {
+          if(msg == "Success"){
+            window.location = url + 'admin';
+          }
+        }
+      }); 
+    });
+  </script>  
