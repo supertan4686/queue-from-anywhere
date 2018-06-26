@@ -3,7 +3,6 @@
 
 <!-- sidebar: style can be found in sidebar.less -->
 <section class="sidebar">
-  <?php echo $pageactive;?>
   <!-- Sidebar user panel (optional) -->
   <div class="user-panel">
     <div class="pull-left image">
