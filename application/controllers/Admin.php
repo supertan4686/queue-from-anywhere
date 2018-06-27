@@ -11,7 +11,8 @@ class Admin extends CI_Controller {
   public function index(){
     if($this->_check_cookie()){
       $cookie = $_COOKIE[$this->cookie_name];
-      $token = explode(" ", $cookie)[1];
+      $tokenexplode = explode(" ", $cookie);
+      $token = $tokenexplode[1];
       $admin_id = $this->Admin_model->get_admin_id_by_token($token);
       if($admin_id == NULL){
         header("location: " . site_url('admin/login'));
@@ -39,7 +40,8 @@ class Admin extends CI_Controller {
 
     if($this->_check_cookie()){
       $cookie = $_COOKIE[$this->cookie_name];
-      $token = explode(" ", $cookie)[1];
+      $tokenexplode = explode(" ", $cookie);
+      $token = $tokenexplode[1];
       $admin_id = $this->Admin_model->get_admin_id_by_token($token);
       if($admin_id == NULL){
         $this->load->view('template/header', $data);
@@ -60,7 +62,8 @@ class Admin extends CI_Controller {
   public function employee(){
     if($this->_check_cookie()){
       $cookie = $_COOKIE[$this->cookie_name];
-      $token = explode(" ", $cookie)[1];
+      $tokenexplode = explode(" ", $cookie);
+      $token = $tokenexplode[1];
       $admin_id = $this->Admin_model->get_admin_id_by_token($token);
       if($admin_id == NULL){
         header("location: " . site_url('admin/login'));
@@ -84,7 +87,8 @@ class Admin extends CI_Controller {
   public function service(){
     if($this->_check_cookie()){
       $cookie = $_COOKIE[$this->cookie_name];
-      $token = explode(" ", $cookie)[1];
+      $tokenexplode = explode(" ", $cookie);
+      $token = $tokenexplode[1];
       $admin_id = $this->Admin_model->get_admin_id_by_token($token);
       if($admin_id == NULL){
         header("location: " . site_url('admin/login'));
@@ -109,7 +113,8 @@ class Admin extends CI_Controller {
     $username = $this->input->post('username');
     $password = $this->input->post('password');
     // $rememberme = $this->input->post('rememberme');
-    $adminid = $this->Admin_model->admin_login($username, $password)['id'];
+    $admin = $this->Admin_model->admin_login($username, $password);
+    $adminid = $admin['id'];
     if ($adminid != 0) {
       $token = $this->_gen_token();
       $timestamp = time()+(30*24*60*60);
@@ -127,7 +132,8 @@ class Admin extends CI_Controller {
   public function ajax_logout(){
     $admin_id = $this->input->post('adminid');
     $cookie = $_COOKIE[$this->cookie_name];
-    $token = explode(" ", $cookie)[1];
+    $tokenexplode = explode(" ", $cookie);
+    $token = $tokenexplode[1];
     if ($this->Admin_model->delete_session($admin_id, $token)) {
       echo 'Success';
     } else {
