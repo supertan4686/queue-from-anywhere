@@ -4,7 +4,7 @@
     <section class="content-header">
       <h1>
         สถิติข้อมูลของพนักงาน
-        <small>อัพเดตล่าสุดวันที่ XX เดือน XX พ.ศ. XXXX เวลา XX:XX น.</small>
+        <small>อัพเดตล่าสุดวันที่ XX เดือน XX พ.ศ. XXXX</small>
       </h1>
     </section>
 
@@ -26,7 +26,7 @@
                     <th rowspan="2">เวลา Logout</th>
                     <th rowspan="2">จำนวนลูกค้าที่บริการ (คน)</th>
                     <th colspan="6">จำนวนลูกค้าที่ประเมิน (คน)</th>
-                    <th>ประเมินความพึงพอใจ</th>
+                    <th colspan="3">ประเมินความพึงพอใจ</th>
                   </tr>
                   <tr>
                     <th>รหัสพนักงาน</th>
@@ -37,8 +37,9 @@
                     <th>2 คะแนน</th>
                     <th>1 คะแนน</th>
                     <th>ไม่ประเมิน</th>
-                    <th>คะแนน</th>
-                    <th>ร้อยละ</th>
+                    <th>คะแนนทั้งหมด</th>
+                    <th>คะแนนเฉลี่ย</th>
+                    <th>ร้อยละของความพึงพอใจ</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -57,6 +58,7 @@
                       <th><?php echo $employee['score 1'];?></th>
                       <th><?php echo $employee['score 0'];?></th>
                       <th><?php echo $employee['Total Score'];?></th>
+                      <th><?php echo $employee['Averange'];?></th>
                       <th>XX.XX</th>
                     </tr>
                   <?php
