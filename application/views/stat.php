@@ -42,36 +42,26 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>XXXX01</td>
-                    <td>นาย ก จงรักภักดี</td>
-                    <td>09.00</td>
-                    <td>16.00</td>
-                    <td>50</td>
-                    <td>10</td>
-                    <td>9</td>
-                    <td>8</td>
-                    <td>7</td>
-                    <td>6</td>
-                    <td>10</td>
-                    <td>XX.XX</td>
-                    <td>XX.XX</td>
-                  </tr>
-                  <tr>
-                    <td>XXXX02</td>
-                    <td>นาย ข อกตัญญู</td>
-                    <td>10.00</td>
-                    <td>15.00</td>
-                    <td>30</td>
-                    <td>1</td>
-                    <td>2</td>
-                    <td>3</td>
-                    <td>4</td>
-                    <td>5</td>
-                    <td>15</td>
-                    <td>XX.XX</td>
-                    <td>XX.XX</td>
-                  </tr>
+                  <?php
+                  foreach ($employee_group as $index => $employee) { ?>
+                    <tr>
+                      <th><?php echo $employee['employee_id'];?></th>
+                      <th><?php echo $employee['employee_name'];?></th>
+                      <th><?php echo $employee['login_time'];?></th>
+                      <th><?php echo $employee['logout_time'];?></th>
+                      <th><?php echo $employee['Amount customer'];?></th>
+                      <th><?php echo $employee['score 5'];?></th>
+                      <th><?php echo $employee['score 4'];?></th>
+                      <th><?php echo $employee['score 3'];?></th>
+                      <th><?php echo $employee['score 2'];?></th>
+                      <th><?php echo $employee['score 1'];?></th>
+                      <th><?php echo $employee['score 0'];?></th>
+                      <th><?php echo $employee['Total Score'];?></th>
+                      <th>XX.XX</th>
+                    </tr>
+                  <?php
+                  }
+                  ?>
                 </tbody>
               </table>
             </div>

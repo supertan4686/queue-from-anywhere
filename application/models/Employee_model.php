@@ -8,7 +8,7 @@ class Employee_model extends CI_Model {
 
 	function get_employee_data($date){
 		//Sub query
-		$selectsub = "login_log.employee_id, min(login_log.login_time), max(login_log.logout_time)";
+		$selectsub = "login_log.employee_id, min(login_log.login_time) AS 'login_time', max(login_log.logout_time) AS 'logout_time'";
 		$this->db->select($selectsub);
 		$this->db->where('login_log.date', $date);
 		$this->db->group_by("login_log.employee_id");
@@ -16,7 +16,7 @@ class Employee_model extends CI_Model {
 		$this->db->reset_query();
 
 		//Main query
-		$selectmain = "employee.employee_id, CONCAT(employee.employee_name_title, ' ', employee.employee_firstname, ' ', employee.employee_lastname) AS 'employee_name', count(queue_log.score) AS 'Amount customer', SUM(queue_log.score) AS 'Total Score', SUM(CASE queue_log.score WHEN '0' THEN 1 ELSE 0 END) AS '0', SUM(CASE queue_log.score WHEN '1' THEN 1 ELSE 0 END) AS '1', SUM(CASE queue_log.score WHEN '2' THEN 1 ELSE 0 END) AS '2', SUM(CASE queue_log.score WHEN '3' THEN 1 ELSE 0 END) AS '3', SUM(CASE queue_log.score WHEN '4' THEN 1 ELSE 0 END) AS '4', SUM(CASE queue_log.score WHEN '5' THEN 1 ELSE 0 END) AS '5'";
+		$selectmain = "employee.employee_id, CONCAT(employee.employee_name_title, ' ', employee.employee_firstname, ' ', employee.employee_lastname) AS 'employee_name', login_log.login_time, login_log.logout_time ,count(queue_log.score) AS 'Amount customer', SUM(queue_log.score) AS 'Total Score', SUM(CASE queue_log.score WHEN '0' THEN 1 ELSE 0 END) AS 'score 0', SUM(CASE queue_log.score WHEN '1' THEN 1 ELSE 0 END) AS 'score 1', SUM(CASE queue_log.score WHEN '2' THEN 1 ELSE 0 END) AS ' score 2', SUM(CASE queue_log.score WHEN '3' THEN 1 ELSE 0 END) AS 'score 3', SUM(CASE queue_log.score WHEN '4' THEN 1 ELSE 0 END) AS 'score 4', SUM(CASE queue_log.score WHEN '5' THEN 1 ELSE 0 END) AS 'score 5'";
 		$this->db->select($selectmain);
 		$this->db->from('queue_log');
 		//Join subquery

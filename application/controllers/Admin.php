@@ -5,7 +5,9 @@ class Admin extends CI_Controller {
   public function __construct() {
     parent::__construct();
     $this->load->model('Admin_model');
+    $this->load->model('Employee_model');
     $this->cookie_name = 'peastat';
+    $this->date = '2018-06-01';
   }
   
   public function index(){
@@ -18,10 +20,13 @@ class Admin extends CI_Controller {
         header("location: " . site_url('admin/login'));
       } else {
         $admin =  $this->Admin_model->get_admin_by_id($admin_id);
+        $a_employee_data = $this->Employee_model->get_employee_data($this->date);
+        // print_r($a_employee_data);
         $data = array(
           'pageactive' => 'stat',
           'admin_id' => $admin_id,
-          'admin' => $admin
+          'admin' => $admin,
+          'employee_group' => $a_employee_data
         );
         $this->load->view('template/header', $data);
         $this->load->view('template/sidebar_admin');
