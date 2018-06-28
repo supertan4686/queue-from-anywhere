@@ -50,16 +50,16 @@
                       <th><?php echo $employee['employee_name'];?></th>
                       <th><?php echo $employee['login_time'];?></th>
                       <th><?php echo $employee['logout_time'];?></th>
-                      <th><?php echo $employee['Amount customer'];?></th>
-                      <th><?php echo $employee['score 5'];?></th>
-                      <th><?php echo $employee['score 4'];?></th>
-                      <th><?php echo $employee['score 3'];?></th>
-                      <th><?php echo $employee['score 2'];?></th>
-                      <th><?php echo $employee['score 1'];?></th>
-                      <th><?php echo $employee['score 0'];?></th>
-                      <th><?php echo $employee['Total Score'];?></th>
-                      <th><?php echo $employee['Averange'];?></th>
-                      <th>XX.XX</th>
+                      <th><?php echo $employee['amount_customer'];?></th>
+                      <th><?php echo $employee['score_5'];?></th>
+                      <th><?php echo $employee['score_4'];?></th>
+                      <th><?php echo $employee['score_3'];?></th>
+                      <th><?php echo $employee['score_2'];?></th>
+                      <th><?php echo $employee['score_1'];?></th>
+                      <th><?php echo $employee['score_0'];?></th>
+                      <th><?php echo $employee['total_score'];?></th>
+                      <th><?php echo $employee['score_averange'];?></th>
+                      <th><?php echo $employee['satisfaction_percent'];?></th>
                     </tr>
                   <?php
                   }

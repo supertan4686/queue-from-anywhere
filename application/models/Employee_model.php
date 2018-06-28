@@ -16,8 +16,15 @@ class Employee_model extends CI_Model {
 		$this->db->reset_query();
 
 		//Main query
-		$selectmain = "employee.employee_id, CONCAT(employee.employee_name_title, ' ', employee.employee_firstname, ' ', employee.employee_lastname) AS 'employee_name', login_log.login_time, login_log.logout_time ,count(queue_log.score) AS 'Amount customer', SUM(queue_log.score) AS 'Total Score', SUM(CASE queue_log.score WHEN '0' THEN 1 ELSE 0 END) AS 'score 0', SUM(CASE queue_log.score WHEN '1' THEN 1 ELSE 0 END) AS 'score 1', SUM(CASE queue_log.score WHEN '2' THEN 1 ELSE 0 END) AS ' score 2', SUM(CASE queue_log.score WHEN '3' THEN 1 ELSE 0 END) AS 'score 3', SUM(CASE queue_log.score WHEN '4' THEN 1 ELSE 0 END) AS 'score 4', SUM(CASE queue_log.score WHEN '5' THEN 1 ELSE 0 END) AS 'score 5', ((1 * SUM(CASE queue_log.score WHEN '1' THEN 1 ELSE 0 END)) + (2 * SUM(CASE queue_log.score WHEN '2' THEN 1 ELSE 0 END)) + (3 * SUM(CASE queue_log.score WHEN '3' THEN 1 ELSE 0 END)) + (4 * SUM(CASE queue_log.score WHEN '4' THEN 1 ELSE 0 END)) + (5 * SUM(CASE queue_log.score WHEN '5' THEN 1 ELSE 0 END))) / count(CASE WHEN queue_log.score != '0' THEN 1 ELSE null END) AS 'Averange'";
-		$this->db->select($selectmain);
+		$selectmain = "employee.employee_id, CONCAT(employee.employee_name_title, ' ', employee.employee_firstname, ' ', employee.employee_lastname) AS 'employee_name', login_log.login_time, login_log.logout_time ,count(queue_log.score) AS 'amount_customer', ";
+
+		$select_evaluation_amount = "SUM(queue_log.score) AS 'total_score', SUM(CASE queue_log.score WHEN '0' THEN 1 ELSE 0 END) AS 'score_0', SUM(CASE queue_log.score WHEN '1' THEN 1 ELSE 0 END) AS 'score_1', SUM(CASE queue_log.score WHEN '2' THEN 1 ELSE 0 END) AS 'score_2', SUM(CASE queue_log.score WHEN '3' THEN 1 ELSE 0 END) AS 'score_3', SUM(CASE queue_log.score WHEN '4' THEN 1 ELSE 0 END) AS 'score_4', SUM(CASE queue_log.score WHEN '5' THEN 1 ELSE 0 END) AS 'score_5', ";
+
+		$select_score_averange = "((1 * SUM(CASE queue_log.score WHEN '1' THEN 1 ELSE 0 END)) + (2 * SUM(CASE queue_log.score WHEN '2' THEN 1 ELSE 0 END)) + (3 * SUM(CASE queue_log.score WHEN '3' THEN 1 ELSE 0 END)) + (4 * SUM(CASE queue_log.score WHEN '4' THEN 1 ELSE 0 END)) + (5 * SUM(CASE queue_log.score WHEN '5' THEN 1 ELSE 0 END))) / count(CASE WHEN queue_log.score != '0' THEN 1 ELSE null END) AS 'score_averange', ";
+
+		$select_satisfaction_percent = "(((1 * SUM(CASE queue_log.score WHEN '1' THEN 1 ELSE 0 END)) + (2 * SUM(CASE queue_log.score WHEN '2' THEN 1 ELSE 0 END)) + (3 * SUM(CASE queue_log.score WHEN '3' THEN 1 ELSE 0 END)) + (4 * SUM(CASE queue_log.score WHEN '4' THEN 1 ELSE 0 END)) + (5 * SUM(CASE queue_log.score WHEN '5' THEN 1 ELSE 0 END))) * 100) / (count(CASE WHEN queue_log.score != '0' THEN 1 ELSE null END) * 5) AS 'satisfaction_percent'";
+
+		$this->db->select($selectmain . $select_evaluation_amount . $select_score_averange . $select_satisfaction_percent);
 		$this->db->from('queue_log');
 		//Join subquery
 		$this->db->join(' (' . $subquery . ') AS login_log', 'login_log.employee_id = queue_log.employee_id');
