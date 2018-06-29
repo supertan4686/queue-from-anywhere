@@ -6,7 +6,7 @@ class Employee_model extends CI_Model {
 		$this->load->database();
 	}
 
-	function get_employee_data($date){
+	function get_stat_employee_data($date){
 		//Sub query
 		$selectsub = "login_log.employee_id, min(login_log.login_time) AS 'login_time', max(login_log.logout_time) AS 'logout_time'";
 		$this->db->select($selectsub);
@@ -40,6 +40,10 @@ class Employee_model extends CI_Model {
 
 	function insert_queue_log($data){
 		$this->db->insert('queue_log', $data);
+	}
+
+	function get_employee_data(){
+		return $this->db->get('employee')->result_array();
 	}
 }
 

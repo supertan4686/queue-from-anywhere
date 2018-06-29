@@ -14,7 +14,7 @@ class Stat extends CI_Controller {
     if($this->_check_cookie()){
       header("location: " . site_url('admin'));
     } else {
-      $a_employee_data = $this->Employee_model->get_employee_data($this->date);
+      $a_employee_data = $this->Employee_model->get_stat_employee_data($this->date);
       $data = array(
         'pageactive' => 'stat',
         'employee_group' => $a_employee_data

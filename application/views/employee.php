@@ -34,33 +34,20 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>XXXX01</td>
-                    <td>นาย ก จงรักภักดี</td>
-                    <td>พนักงานงานประเภท A</td>
-                    <td>
+                  <?php
+                  foreach ($a_employee as $index => $employee) { ?>
+                    <tr>
+                      <td><?php echo $employee['employee_id'];?></td>
+                      <td><?php echo $employee['employee_name_title'] . ' ' . $employee['employee_firstname'] . ' ' . $employee['employee_lastname'] ?></td>  
+                      <td><?php echo $employee['position'];?></td>
+                      <td>
                       <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#formEmployeeModal">แก้ไข</button>
                       <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal">ลบ</button>
                     </td>
-                  </tr>
-                  <tr>
-                    <td>XXXX02</td>
-                    <td>นาย ข อกตัญญู</td>
-                    <td>พนักงานงานประเภท A</td>
-                    <td>
-                      <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#formEmployeeModal">แก้ไข</button>
-                      <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal">ลบ</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>XXXX03</td>
-                    <td>นาย ค เฉยๆ</td>
-                    <td>พนักงานงานประเภท B</td>
-                    <td>
-                      <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#formEmployeeModal">แก้ไข</button>
-                      <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal">ลบ</button>
-                    </td>
-                  </tr>
+                    </tr>
+                  <?php
+                  }
+                  ?>
                 </tbody>
               </table>
             </div>
@@ -89,22 +76,29 @@
                 <div class="box-body">
                   <!-- รหัสพนักงาน -->
                   <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-3 control-label">รหัสพนักงาน</label>
+                    <label for="employee_id" class="col-sm-3 control-label">รหัสพนักงาน</label>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="inputEmail3" placeholder="">
+                      <input type="text" class="form-control" id="employee_id" name="employee_id" placeholder="">
                     </div>
                   </div>
                   <!-- /.จบรหัสพนักงาน -->
                   <!-- ชื่อพนักงาน -->
                   <div class="form-group">
-                    <label for="inputPassword3" class="col-sm-3 control-label">ชื่อพนักงาน</label>
+                    <label for="employee_name" class="col-sm-3 control-label">ชื่อพนักงาน</label>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="inputPassword3" placeholder="">
+                      <input type="text" class="form-control" id="employee_name" name="employee_name" placeholder="">
+                    </div>
+                  </div>
+                  <!-- ตำแหน่งกรอก -->
+                  <div class="form-group">
+                    <label for="position" class="col-sm-3 control-label">ตำแหน่ง</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="position" name="position" placeholder="">
                     </div>
                   </div>
                   <!-- /.จบชื่อพนักงาน -->
-                  <!-- ตำแหน่ง -->
-                  <div class="form-group">
+                  <!-- ตำแหน่ง dropdown list -->
+                  <!-- <div class="form-group">
                     <label for="inputPassword3" class="col-sm-3 control-label">ตำแหน่ง</label>
                     <div class="col-sm-9">
                       <select class="form-control select2" style="width: 100%;">
@@ -113,8 +107,8 @@
                         <option>สารสนเทศองค์กร</option>
                       </select>
                     </div>
-                  </div>
-                  <!-- /.จบตำแหน่ง -->
+                  </div> -->
+                  <!-- /.จบตำแหน่ง dropdown list -->
                 </div>
                 <!-- /.box-body -->
               </form>
@@ -149,6 +143,5 @@
       </div>
     </div>
     <!-- /.Modal Delete -->
-
   </div>
   <!-- /.content-wrapper -->
