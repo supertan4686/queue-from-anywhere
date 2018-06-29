@@ -68,6 +68,17 @@ class Admin extends CI_Controller {
   public function employee(){
     $act = $this->input->get('act');
     $employee_id = $this->input->get('employee');
+
+    if ($act == 'insert') {
+      $message_act = 'เพิ่มข้อมูลพนักงานรหัส ' . $employee_id . 'เรียบร้อยแล้ว';
+    } else if ($act == 'update') {
+      $message_act = 'อัพเดตข้อมูลพนักงานรหัส ' . $employee_id . 'เรียบร้อยแล้ว';
+    } else if ($act == 'delete') {
+      $message_act = 'ลบข้อมูลพนักงานรหัส ' . $employee_id . 'เรียบร้อยแล้ว';
+    } else {
+      $message_act = 'เพิ่ม,ลบหรืออัพเดตข้อมูลพนักงานรหัส ' . $employee_id . 'ล้มเหลว';
+    }
+
     if($this->_check_cookie()){
       $cookie = $_COOKIE[$this->cookie_name];
       $tokenexplode = explode(" ", $cookie);
@@ -84,6 +95,7 @@ class Admin extends CI_Controller {
           'admin' => $admin,
           'a_employee' => $a_employee,
           'act' => $act,
+          'message_act' => $message_act,
           'employee_id' => $employee_id
         );
         $this->load->view('template/header', $data);
@@ -184,6 +196,16 @@ class Admin extends CI_Controller {
       );
     }
 
+    return echo_json($result);
+  }
+
+  public function ajax_delete_employee(){
+    $employee_id = $this->input->post('employee_id');
+    $this->Employee_model->delete_employee($employee_id);
+    $result = array(
+      'type' => 'delete',
+      'result' => 'success',
+      'employee_id' => $employee_id);
     return echo_json($result);
   }
 

@@ -23,13 +23,13 @@
               </div>
               <div class="row">
                 <div class="col-xs-7">
-                  <div class="alert alert-success alert-dismissible" style="<?php echo $act == 'insert' || $act == 'update' ? '' : 'display:none'?>">
+                  <div class="alert alert-success alert-dismissible" style="<?php echo $act == 'insert' || $act == 'update' || $act == 'delete' ? '' : 'display:none'?>">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    <p><i class="icon fa fa-check"></i> <?php echo $act != 'fail' ? $act == 'insert' ? 'เพิ่มข้อมูลของพนักงาน' . $employee_id . 'เรียบร้อยแล้ว' : 'อัพเดตข้อมูลของพนักงาน' . $employee_id . 'เรียบร้อยแล้ว': '';?></p>
+                    <p><i class="icon fa fa-check"></i><?php echo $message_act;?></p>
                   </div>
                   <div class="alert alert-danger alert-dismissible" style="<?php echo $act == 'fail' ? '' : 'display:none'?>">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    <p><i class="icon fa fa-ban"></i><?php echo $act == 'fail' ? 'การเพิ่มหรืออัพเดตข้อมูลพนักงาน' . $employee_id .'ล้มเหลว': '';?></p>
+                    <p><i class="icon fa fa-ban"></i><?php echo $message_act;?></p>
                   </div>
                 </div>
               </div>
@@ -54,7 +54,7 @@
                       <td><?php echo $employee['position'];?></td>
                       <td>
                       <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#formEmployeeModal" onclick="get_employee('<?php echo $employee['employee_id'];?>');">แก้ไข</button>
-                      <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal">ลบ</button>
+                      <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal" >ลบ</button>
                     </td>
                     </tr>
                   <?php
@@ -154,7 +154,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-            <button type="button" class="btn btn-danger">ลบ</button>
+            <button type="button" class="btn btn-danger" onclick="delete_employee('<?php echo $employee['employee_id'];?>');">ลบ</button>
           </div>
         </div>
       </div>
@@ -200,6 +200,25 @@
             window.location.replace(url + 'admin/employee?act=insert&employee=' + data.employee_id);
           } else if(data.type == 'update' && data.result == 'success'){
             window.location.replace(url + 'admin/employee?act=update&employee=' + data.employee_id);
+          } else {
+            window.location.replace(url + 'admin/employee?act=fail&employee=' + data.employee_id);
+          }
+        }
+      });
+    }
+
+    function delete_employee(employee_id){
+      $.ajax({
+        url: url +'admin/ajax_delete_employee',
+        type:'POST',
+        data: {
+          employee_id: employee_id
+        },
+        success: function (result) {
+          data = JSON.parse(result).data;
+          // console.log(data);
+          if (data.type == 'delete' && data.result == 'success') {
+            window.location.replace(url + 'admin/employee?act=delete&employee=' + data.employee_id);
           } else {
             window.location.replace(url + 'admin/employee?act=fail&employee=' + data.employee_id);
           }
