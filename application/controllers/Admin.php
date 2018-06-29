@@ -6,6 +6,7 @@ class Admin extends CI_Controller {
     parent::__construct();
     $this->load->model('Admin_model');
     $this->load->model('Employee_model');
+    $this->load->helper('common_helper');
     $this->cookie_name = 'peastat';
     $this->date = '2018-06-01';
   }
@@ -145,6 +146,16 @@ class Admin extends CI_Controller {
       echo 'Success';
     } else {
       echo 'Fail';
+    }
+  }
+
+  public function ajax_get_employee_by_id(){
+    $employee_id = $this->input->get('employee_id');
+    $employee_data = $this->Employee_model->get_employee_data_by_id($employee_id);
+    if ($employee_data != NULL){
+      return echo_json($employee_data);
+    } else {
+      return echo_json();
     }
   }
 

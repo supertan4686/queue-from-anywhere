@@ -41,7 +41,7 @@
                       <td><?php echo $employee['employee_name_title'] . ' ' . $employee['employee_firstname'] . ' ' . $employee['employee_lastname'] ?></td>  
                       <td><?php echo $employee['position'];?></td>
                       <td>
-                      <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#formEmployeeModal">แก้ไข</button>
+                      <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#formEmployeeModal" onclick="edit_employee('<?php echo $employee['employee_id'];?>');">แก้ไข</button>
                       <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal">ลบ</button>
                     </td>
                     </tr>
@@ -62,12 +62,12 @@
     <!-- /.content -->
 
     <!-- Modal add Edit -->
-    <div class="modal fade" id="formEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal fade" id="formEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="formEmployeeModalLabel">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
-            <h4 class="modal-title" id="myModalLabel">เพิ่มหรือแก้ไขข้อมูลพนักงาน</h4>
+            <h4 class="modal-title" id="formEmployeeModalLabel">เพิ่มหรือแก้ไขข้อมูลพนักงาน</h4>
           </div>
           <div class="modal-body">
             <div class="container-fluid">
@@ -82,13 +82,30 @@
                     </div>
                   </div>
                   <!-- /.จบรหัสพนักงาน -->
+                  <!-- คำนำหน้าพนักงาน -->
+                  <div class="form-group">
+                    <label for="employee_name" class="col-sm-3 control-label">คำนำหน้าชื่อพนักงาน</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="employee_name_title" name="employee_name_title" placeholder="">
+                    </div>
+                  </div>
+                  <!-- /. จบคำนำหน้าพนักงาน -->
                   <!-- ชื่อพนักงาน -->
                   <div class="form-group">
                     <label for="employee_name" class="col-sm-3 control-label">ชื่อพนักงาน</label>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="employee_name" name="employee_name" placeholder="">
+                      <input type="text" class="form-control" id="employee_firstname" name="employee_firstname" placeholder="">
                     </div>
                   </div>
+                  <!-- /. จบชื่อพนักงาน -->
+                  <!-- นามสกุลพนักงาน -->
+                  <div class="form-group">
+                    <label for="employee_name" class="col-sm-3 control-label">นามสกุลพนักงาน</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="employee_lastname" name="employee_lastname" placeholder="">
+                    </div>
+                  </div>
+                  <!-- /. จบนามสกุลพนักงาน -->
                   <!-- ตำแหน่งกรอก -->
                   <div class="form-group">
                     <label for="position" class="col-sm-3 control-label">ตำแหน่ง</label>
@@ -145,3 +162,29 @@
     <!-- /.Modal Delete -->
   </div>
   <!-- /.content-wrapper -->
+
+  <script>
+    function edit_employee(employee_id){
+      var url = "<?php echo base_url();?>";
+
+      //Get Employee data
+      $.ajax({
+        url: url +'admin/ajax_get_employee_by_id?employee_id=' + employee_id,
+        type:'GET',
+        success: function (result) {
+          data = JSON.parse(result);
+          console.log(data);
+          if(data.data != []) {
+            var employee = data.data;
+            $('#employee_id').val(data.data.employee_id);
+            $('#employee_name_title').val(data.data.employee_name_title);
+            $('#employee_firstname').val(data.data.employee_firstname);
+            $('#employee_lastname').val(data.data.employee_lastname);
+            $('#position').val(data.data.position);
+          } else {
+            alert('ไม่พบข้อมูลผู้ใช้');
+          }
+        }
+      });
+    }
+  </script>

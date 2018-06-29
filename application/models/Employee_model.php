@@ -45,6 +45,11 @@ class Employee_model extends CI_Model {
 	function get_employee_data(){
 		return $this->db->get('employee')->result_array();
 	}
+
+	function get_employee_data_by_id($employee_id){
+		$this->db->where('employee_id', $employee_id);
+		return $this->db->get('employee')->row_array();
+	}
 }
 
 ?>
