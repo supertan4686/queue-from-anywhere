@@ -128,7 +128,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-            <button type="button" class="btn btn-primary">บันทึก</button>
+            <button type="button" class="btn btn-primary" onclick="submit_service();">บันทึก</button>
           </div>
         </div>
       </div>
@@ -148,7 +148,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-            <button type="button" class="btn btn-danger">ลบ</button>
+            <button type="button" class="btn btn-danger" onclick="delete_service('<?php echo $service['service_id'];?>');">ลบ</button>
           </div>
         </div>
       </div>
@@ -172,8 +172,8 @@
             var service = data.data;
             $('#service_name').val(service.service_name);
             $('#service_id').val(service.service_id);
-            $('#service_start_queue').val(service_start_queue);
-            $('#service_end_queue').val(service_end_queue);
+            $('#service_start_queue').val(service.service_start_queue);
+            $('#service_end_queue').val(service.service_end_queue);
           } else {
             alert('ไม่พบข้อมูลผู้ใช้');
           }
