@@ -18,7 +18,19 @@
                   <h2 class="box-title">ตารางรายการข้อมูลพนักงาน</h2>
                 </div>
                 <div class="col-xs-2">
-                  <button type="button" class="btn btn-block btn-success" data-toggle="modal" data-target="#formEmployeeModal"> <i class="fa fa-plus"></i> <span>เพิ่มพนักงาน</span></button>
+                  <button type="button" class="btn btn-block btn-success" data-toggle="modal" data-target="#formEmployeeModal" onclick="init_new_form();"> <i class="fa fa-plus"></i> <span>เพิ่มพนักงาน</span></button>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-7">
+                  <div class="alert alert-success alert-dismissible" style="<?php echo $act == 'insert' || $act == 'update' ? '' : 'display:none'?>">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <p><i class="icon fa fa-check"></i> <?php echo $act != 'fail' ? $act == 'insert' ? 'เพิ่มข้อมูลของพนักงาน' . $employee_id . 'เรียบร้อยแล้ว' : 'อัพเดตข้อมูลของพนักงาน' . $employee_id . 'เรียบร้อยแล้ว': '';?></p>
+                  </div>
+                  <div class="alert alert-danger alert-dismissible" style="<?php echo $act == 'fail' ? '' : 'display:none'?>">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <p><i class="icon fa fa-ban"></i><?php echo $act == 'fail' ? 'การเพิ่มหรืออัพเดตข้อมูลพนักงาน' . $employee_id .'ล้มเหลว': '';?></p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -41,7 +53,7 @@
                       <td><?php echo $employee['employee_name_title'] . ' ' . $employee['employee_firstname'] . ' ' . $employee['employee_lastname'] ?></td>  
                       <td><?php echo $employee['position'];?></td>
                       <td>
-                      <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#formEmployeeModal" onclick="edit_employee('<?php echo $employee['employee_id'];?>');">แก้ไข</button>
+                      <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#formEmployeeModal" onclick="get_employee('<?php echo $employee['employee_id'];?>');">แก้ไข</button>
                       <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal">ลบ</button>
                     </td>
                     </tr>
@@ -72,7 +84,7 @@
           <div class="modal-body">
             <div class="container-fluid">
               <!-- form start -->
-              <form class="form-horizontal">
+              <form class="form-horizontal" id="submitModal" name="submitModal">
                 <div class="box-body">
                   <!-- รหัสพนักงาน -->
                   <div class="form-group">
@@ -114,18 +126,6 @@
                     </div>
                   </div>
                   <!-- /.จบชื่อพนักงาน -->
-                  <!-- ตำแหน่ง dropdown list -->
-                  <!-- <div class="form-group">
-                    <label for="inputPassword3" class="col-sm-3 control-label">ตำแหน่ง</label>
-                    <div class="col-sm-9">
-                      <select class="form-control select2" style="width: 100%;">
-                        <option selected="selected">พนักงานชำระค่าไฟฟ้า</option>
-                        <option>ช่างไฟฟ้า</option>
-                        <option>สารสนเทศองค์กร</option>
-                      </select>
-                    </div>
-                  </div> -->
-                  <!-- /.จบตำแหน่ง dropdown list -->
                 </div>
                 <!-- /.box-body -->
               </form>
@@ -134,7 +134,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-            <button type="button" class="btn btn-primary">บันทึก</button>
+            <button type="button" class="btn btn-primary" onclick="submit_employee();">บันทึก</button>
           </div>
         </div>
       </div>
@@ -147,10 +147,10 @@
         <div class="modal-content">
           <div class="modal-header">
             <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
-            <h4 class="modal-title" id="myModalLabel">ลบข้อมูลกลุ่มงานบริการ</h4>
+            <h4 class="modal-title" id="myModalLabel">ลบข้อมูลพนักงาน</h4>
           </div>
           <div class="modal-body">
-            <p>คุณต้องการลบข้อมูลกลุ่มงานบริการนี้จริงๆหรือไม่ ?</p>
+            <p>คุณต้องการลบข้อมูลพนักงานคนนี้จริงๆหรือไม่ ?</p>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
@@ -164,16 +164,16 @@
   <!-- /.content-wrapper -->
 
   <script>
-    function edit_employee(employee_id){
-      var url = "<?php echo base_url();?>";
+    var url = "<?php echo base_url();?>";
 
+    function get_employee(employee_id){
       //Get Employee data
       $.ajax({
         url: url +'admin/ajax_get_employee_by_id?employee_id=' + employee_id,
         type:'GET',
         success: function (result) {
           data = JSON.parse(result);
-          console.log(data);
+          // console.log(data);
           if(data.data != []) {
             var employee = data.data;
             $('#employee_id').val(data.data.employee_id);
@@ -186,5 +186,33 @@
           }
         }
       });
+    }
+
+    function submit_employee(){
+      var data = $('#submitModal').serialize();
+      $.ajax({
+        url: url +'admin/ajax_submit_employee',
+        type:'POST',
+        data: data,
+        success: function (result) {
+          data = JSON.parse(result).data;
+          if (data.type == 'insert' && data.result == 'success') {
+            window.location.replace(url + 'admin/employee?act=insert&employee=' + data.employee_id);
+          } else if(data.type == 'update' && data.result == 'success'){
+            window.location.replace(url + 'admin/employee?act=update&employee=' + data.employee_id);
+          } else {
+            window.location.replace(url + 'admin/employee?act=fail&employee=' + data.employee_id);
+          }
+        }
+      });
+    }
+
+    function init_new_form(){
+      // console.log('clear_form')
+      $('#employee_id').val('');
+      $('#employee_name_title').val('');
+      $('#employee_firstname').val('');
+      $('#employee_lastname').val('');
+      $('#position').val('');
     }
   </script>

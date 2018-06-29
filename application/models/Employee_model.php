@@ -50,6 +50,20 @@ class Employee_model extends CI_Model {
 		$this->db->where('employee_id', $employee_id);
 		return $this->db->get('employee')->row_array();
 	}
+
+	function check_exist_employee($employee_id){
+		$this->db->where('employee_id', $employee_id);
+		return $this->db->get('employee')->num_rows();
+	}
+
+	function insert_new_employee($data){
+		return $this->db->insert('employee', $data);
+	}
+
+	function update_employee($data){
+		$this->db->where('employee_id', $data['employee_id']);
+		return $this->db->update('employee', $data);
+	}
 }
 
 ?>

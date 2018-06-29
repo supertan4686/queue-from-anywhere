@@ -66,6 +66,8 @@ class Admin extends CI_Controller {
   }
 
   public function employee(){
+    $act = $this->input->get('act');
+    $employee_id = $this->input->get('employee');
     if($this->_check_cookie()){
       $cookie = $_COOKIE[$this->cookie_name];
       $tokenexplode = explode(" ", $cookie);
@@ -80,7 +82,9 @@ class Admin extends CI_Controller {
           'pageactive' => 'employee',
           'admin_id' => $admin_id,
           'admin' => $admin,
-          'a_employee' => $a_employee
+          'a_employee' => $a_employee,
+          'act' => $act,
+          'employee_id' => $employee_id
         );
         $this->load->view('template/header', $data);
         $this->load->view('template/sidebar_admin');
@@ -157,6 +161,30 @@ class Admin extends CI_Controller {
     } else {
       return echo_json();
     }
+  }
+
+  public function ajax_submit_employee(){
+    $data = $this->input->post();
+    $checkexistemployee = $this->Employee_model->check_exist_employee($data['employee_id']);
+    if($checkexistemployee == 0){
+      //Insert
+      $this->Employee_model->insert_new_employee($data);
+      $result = array(
+        'type' => 'insert',
+        'result' => 'success',
+        'employee_id' => $data['employee_id']
+      );
+    } else {
+      //Update
+      $this->Employee_model->update_employee($data);
+      $result = array(
+        'type' => 'update',
+        'result' => 'success',
+        'employee_id' => $data['employee_id']
+      );
+    }
+
+    return echo_json($result);
   }
 
   public function submit_satisfication_data(){
