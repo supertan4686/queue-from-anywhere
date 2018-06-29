@@ -146,6 +146,30 @@ class Admin extends CI_Controller {
     }
   }
 
+  public function submit_satisfication_data(){
+    $queue_type = $this->input->post('queue_type');
+    $queue_number = $this->input->post('queue_number');
+    $employee_id = $this->input->post('employee_id');
+    $counter_id = $this->input->post('counter');
+    $queue_create_time = $this->input->post('queue_create_time');
+    $start_service_time = $this->input->post('start_service_time');
+    $end_service_time = $this->input->post('end_service_time');
+    $score = $this->input->post('score');
+    $a_data = array(
+      'queue_type' => $queue_type,
+      'queue_number' => $queue_number,
+      'employee_id' => $employee_id,
+      'counter_id' => $counter_id,
+      'queue_create_time' => $queue_create_time,
+      'start_service_time' => $start_service_time,
+      'end_service_time' => $end_service_time,
+      'score' => $score,
+    );
+
+    $this->Employee_model->insert_queue_log($a_data);
+
+  }
+
   public function checktoken(){
     $cookie_name = $this->input->get('c');
     if(!isset($_COOKIE[$cookie_name])) {
