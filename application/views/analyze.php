@@ -22,7 +22,7 @@
                   <tr>
                     <th colspan=2>พนักงาน</th>
                     <th colspan=3>เวลาการทำงาน</th>
-                    <th colspan=3>จำนวนลูกค้า</th>
+                    <th colspan=3>จำนวนลูกค้า (คน)</th>
                     <th colspan=3>เวลาการให้บริการ</th>
                   </tr>
                   <tr>
