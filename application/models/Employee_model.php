@@ -43,6 +43,15 @@ class Employee_model extends CI_Model {
 	}
 
 	function get_queue_log_data(){
+		$selectmain = "queue_log.counter_id, queue_log.employee_id, CONCAT(employee.employee_name_title, ' ', employee.employee_firstname, ' ', employee.employee_lastname) AS 'employee_name', CONCAT(queue_log.queue_type, queue_log.queue_number) AS 'queue', queue_log.queue_create_time, TIMEDIFF(queue_log.start_service_time, queue_log.queue_create_time) AS wait_service_time, queue_log.start_service_time, queue_log.end_service_time, queue_log.score";
+
+		$this->db->select($selectmain);
+		$this->db->from('queue_log');
+		$this->db->join('employee', 'employee.employee_id = queue_log.employee_id');
+
+		//Get query result
+		$result = $this->db->get()->result_array();
+		return $result;
 		
 	}
 
