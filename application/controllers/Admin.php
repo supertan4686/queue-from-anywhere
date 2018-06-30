@@ -80,7 +80,7 @@ class Admin extends CI_Controller {
         header("location: " . site_url('admin/login'));
       } else {
         $admin =  $this->Admin_model->get_admin_by_id($admin_id);
-        $queue_log = $this->Employee_model->get_queue_log_data();
+        $queue_log = $this->Employee_model->get_queue_log_data($this->date);
         // print_r($a_employee_data);
         $data = array(
           'pageactive' => 'queue',
