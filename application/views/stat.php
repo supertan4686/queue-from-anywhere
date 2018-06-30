@@ -3,8 +3,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        สถิติข้อมูลของพนักงาน
-        <small>อัพเดตล่าสุดวันที่ XX เดือน XX พ.ศ. XXXX</small>
+        รายงานสรุปผลคะแนนของพนักงานและความพึงใจของลูกค้า
       </h1>
     </section>
 
@@ -22,8 +21,6 @@
                 <thead>
                   <tr>
                     <th colspan="2">พนักงาน</th>
-                    <th rowspan="2">เวลา Login</th>
-                    <th rowspan="2">เวลา Logout</th>
                     <th rowspan="2">จำนวนลูกค้าที่บริการ (คน)</th>
                     <th colspan="6">จำนวนลูกค้าที่ประเมิน (คน)</th>
                     <th colspan="3">ประเมินความพึงพอใจ</th>
@@ -48,8 +45,6 @@
                     <tr>
                       <th><?php echo $employee['employee_id'];?></th>
                       <th><?php echo $employee['employee_name'];?></th>
-                      <th><?php echo $employee['login_time'];?></th>
-                      <th><?php echo $employee['logout_time'];?></th>
                       <th><?php echo $employee['amount_customer'];?></th>
                       <th><?php echo $employee['score_5'];?></th>
                       <th><?php echo $employee['score_4'];?></th>

@@ -22,7 +22,7 @@ class Admin extends CI_Controller {
         header("location: " . site_url('admin/login'));
       } else {
         $admin =  $this->Admin_model->get_admin_by_id($admin_id);
-        $a_employee_data = $this->Employee_model->get_stat_employee_data($this->date);
+        $a_employee_data = $this->Employee_model->get_satisfication_employee_data($this->date);
         // print_r($a_employee_data);
         $data = array(
           'pageactive' => 'stat',
@@ -232,6 +232,7 @@ class Admin extends CI_Controller {
       return echo_json();
     }
   }
+
   public function ajax_submit_service(){
     $data = $this->input->post();
     $checkexistservice = $this->Service_model->check_exist_service($data['service_id']);

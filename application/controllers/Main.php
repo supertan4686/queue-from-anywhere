@@ -1,6 +1,6 @@
 <?php
 
-class Stat extends CI_Controller {
+class Main extends CI_Controller {
   
   public function __construct() {
     parent::__construct();
@@ -11,10 +11,13 @@ class Stat extends CI_Controller {
   }
   
   public function index(){
+  }
+
+  public function satisfication(){
     if($this->_check_cookie()){
       header("location: " . site_url('admin'));
     } else {
-      $a_employee_data = $this->Employee_model->get_stat_employee_data($this->date);
+      $a_employee_data = $this->Employee_model->get_satisfication_employee_data($this->date);
       $data = array(
         'pageactive' => 'stat',
         'employee_group' => $a_employee_data
