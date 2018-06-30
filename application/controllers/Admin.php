@@ -330,6 +330,7 @@ class Admin extends CI_Controller {
     $queue_number = $this->input->post('queue_number');
     $employee_id = $this->input->post('employee_id');
     $counter_id = $this->input->post('counter');
+    $ca = $this->input->post('ca');
     $queue_create_time = $this->input->post('queue_create_time');
     $start_service_time = $this->input->post('start_service_time');
     $end_service_time = $this->input->post('end_service_time');
@@ -339,6 +340,7 @@ class Admin extends CI_Controller {
       'queue_number' => $queue_number,
       'employee_id' => $employee_id,
       'counter_id' => $counter_id,
+      'ca' => $ca,
       'queue_create_time' => $queue_create_time,
       'start_service_time' => $start_service_time,
       'end_service_time' => $end_service_time,

@@ -50,7 +50,7 @@ class Main extends CI_Controller {
     if($this->_check_cookie()){
       header("location: " . site_url('admin/queue'));
     } else {
-      $queue_log = $this->Employee_model->get_queue_log_data();
+      $queue_log = $this->Employee_model->get_queue_log_data($this->date);
       $data = array(
         'pageactive' => 'queue',
         'queue_log' => $queue_log
