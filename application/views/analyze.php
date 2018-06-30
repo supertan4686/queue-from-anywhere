@@ -20,15 +20,21 @@
               <table id="example1" class="table table-bordered table-striped display nowrap" style="width:100%">
                 <thead>
                   <tr>
+                    <th colspan=2>พนักงาน</th>
+                    <th colspan=3>เวลาการทำงาน</th>
+                    <th colspan=3>จำนวนลูกค้า</th>
+                    <th colspan=3>เวลาการให้บริการ</th>
+                  </tr>
+                  <tr>
                     <th>รหัสผู้ให้บริการ</th>
                     <th>ชื่อผู้ให้บริการ</th>
                     <th>เวลา Login</th>
                     <th>เวลา Logout</th>
-                    <th>ระยะเวลาการทำงานทั้งหมดจากเวลา Login และ Logout</th>
+                    <th>ระยะเวลาการทำงานทั้งหมด</th>
                     <th>จำนวนลูกค้าที่เรียกบริการ</th>
                     <th>จำนวนลูกค้าที่บริการ</th>
                     <th>จำนวนลูกค้าที่พลาดการบริการ</th>
-                    <th>ระยะเวลาการทำงานทั้งหมด</th>
+                    <th>ระยะเวลาการให้บริการทั้งหมด</th>
                     <th>ระยะเวลาการให้บริการเฉลี่ย</th>
                     <th>ระยะเวลาการให้บริการมากที่สุด</th>
                   </tr>
