@@ -33,14 +33,15 @@ class Main extends CI_Controller {
     if($this->_check_cookie()){
       header("location: " . site_url('admin/analyze'));
     } else {
-      $a_employee_data = $this->Employee_model->get_satisfication_employee_data($this->date);
+      $a_analyze_data = $this->Employee_model->get_analyze_employee_data($this->date);
+      // print_r($a_analyze_data);
       $data = array(
         'pageactive' => 'analyze',
-        'employee_group' => $a_employee_data
+        'a_analyze' => $a_analyze_data
       );
       $this->load->view('template/header', $data);
       $this->load->view('template/sidebar');
-      $this->load->view('satisfication');
+      $this->load->view('analyze');
       $this->load->view('template/footer');  
     }
   }

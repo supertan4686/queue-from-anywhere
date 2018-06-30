@@ -7,14 +7,7 @@ class Employee_model extends CI_Model {
 	}
 
 	function get_satisfication_employee_data($date){
-		//Sub query
-		// $selectsub = "login_log.employee_id, min(login_log.login_time) AS 'login_time', max(login_log.logout_time) AS 'logout_time'";
-		// $this->db->select($selectsub);
-		// $this->db->where('login_log.date', $date);
-		// $this->db->group_by("login_log.employee_id");
-		// $subquery = $this->db->get_compiled_select('login_log', FALSE);
-		// $this->db->reset_query();
-
+	
 		//Main query
 		$selectmain = "employee.employee_id, CONCAT(employee.employee_name_title, ' ', employee.employee_firstname, ' ', employee.employee_lastname) AS 'employee_name',count(queue_log.score) AS 'amount_customer', ";
 
@@ -26,9 +19,6 @@ class Employee_model extends CI_Model {
 
 		$this->db->select($selectmain . $select_evaluation_amount . $select_score_averange . $select_satisfaction_percent);
 		$this->db->from('queue_log');
-		//Join subquery
-		// $this->db->join(' (' . $subquery . ') AS login_log', 'login_log.employee_id = queue_log.employee_id');
-		//Join employee
 		$this->db->join('employee', 'employee.employee_id = queue_log.employee_id');
 		$this->db->group_by("queue_log.employee_id");
 
@@ -38,8 +28,49 @@ class Employee_model extends CI_Model {
 
 	}
 
-	function get_analyze_employee_data(){
+	function get_analyze_employee_data($date){
+		/*START SUB QUERY*/
+		// Subquery Get Login Time
+		$selectsub_login_time = "employee_id, min(login_time) AS 'login_time', max(logout_time) AS 'logout_time', TIMEDIFF(logout_time, login_time) AS 'work_all_time'";
+		$this->db->select($selectsub_login_time);
+		$this->db->where('date', $date);
+		$this->db->group_by("employee_id");
+		$subquery_login_time = $this->db->get_compiled_select('login_log', FALSE);
+		$this->db->reset_query();
 
+		// Subquery Get amount customer
+		$selectsub_amount_customer = "employee_id, count(score) AS 'amount_customer', count(CASE WHEN `end_service_time` is not null THEN 1 ELSE null END) AS 'success_service', count(CASE WHEN `end_service_time` is null THEN 1 ELSE null END) AS 'fail_service'";
+		$this->db->select($selectsub_amount_customer);
+		$this->db->group_by("employee_id");
+		$subquery_amount_customer = $this->db->get_compiled_select('queue_log', FALSE);
+		$this->db->reset_query();
+
+		// Subquery Get work time
+		$selectsub_work_time = "employee_id, SEC_TO_TIME(CAST(AVG(TIME_TO_SEC(TIMEDIFF(`end_service_time`, `start_service_time`))) AS int)) AS 'averange_work_time', MAX(TIMEDIFF(`end_service_time`, `start_service_time`)) AS 'max_work_time'";
+		$this->db->select($selectsub_work_time);
+		$this->db->group_by("employee_id");
+		$this->db->where('end_service_time is not null');
+		$subquery_work_time = $this->db->get_compiled_select('queue_log', FALSE);
+		$this->db->reset_query();
+		/*END SUB QUERY*/
+
+		//Main query
+		$select_employee = "employee.employee_id, CONCAT(employee.employee_name_title, ' ', employee.employee_firstname, ' ', employee.employee_lastname) AS 'employee_name'"; // AS employee
+		$select_login_time = "login.login_time, login.logout_time, login.work_all_time"; // AS login
+		$select_amount_customer = "amount.amount_customer, amount.success_service, amount.fail_service"; // AS amount
+		$select_work_time = "work.averange_work_time, work.max_work_time"; // AS work
+
+		$this->db->select($select_employee . ', ' . $select_login_time . ', ' . $select_amount_customer . ', ' . $select_work_time);
+		$this->db->from('employee');
+		$this->db->join(' (' . $subquery_login_time . ') AS login', 'employee.employee_id = login.employee_id');
+		$this->db->join(' (' . $subquery_amount_customer . ') AS amount', 'employee.employee_id = amount.employee_id');
+		$this->db->join(' (' . $subquery_work_time . ') AS work', 'employee.employee_id = work.employee_id');
+
+		$this->db->group_by("employee.employee_id");
+
+		//Get query result
+		$result = $this->db->get()->result_array();
+		return $result;
 	}
 
 	function get_queue_log_data(){

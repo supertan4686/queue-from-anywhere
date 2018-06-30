@@ -44,7 +44,30 @@ class Admin extends CI_Controller {
   }
 
   public function analyze(){
-  
+    if($this->_check_cookie()){
+      $cookie = $_COOKIE[$this->cookie_name];
+      $tokenexplode = explode(" ", $cookie);
+      $token = $tokenexplode[1];
+      $admin_id = $this->Admin_model->get_admin_id_by_token($token);
+      if($admin_id == NULL){
+        header("location: " . site_url('admin/login'));
+      } else {
+        $admin =  $this->Admin_model->get_admin_by_id($admin_id);
+        $a_analyze_data = $this->Employee_model->get_analyze_employee_data($this->date);
+        $data = array(
+          'pageactive' => 'analyze',
+          'admin_id' => $admin_id,
+          'admin' => $admin,
+          'a_analyze' => $a_analyze_data
+        );
+        $this->load->view('template/header', $data);
+        $this->load->view('template/sidebar_admin');
+        $this->load->view('analyze');
+        $this->load->view('template/footer');
+      }
+    } else {
+      header("location: " . site_url('admin/login'));
+    }
   }
 
   public function queue(){

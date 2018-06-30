@@ -3,7 +3,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        รายงานสรุปผลคะแนนของพนักงานและความพึงใจของลูกค้า
+        รายงานวิเคราะห์การให้บริการของพนักงาน
       </h1>
     </section>
 
@@ -12,49 +12,44 @@
       <div class="row">
         <div class="col-xs-12">
           <div class="box">
-            <div class="box-header">
+            <!-- <div class="box-header">
               <h2 class="box-title">ตารางสถิติข้อมูลพนักงาน</h2>
-            </div>
+            </div> -->
             <!-- /.box-header -->
             <div class="box-body">
               <table id="example1" class="table table-bordered table-striped display nowrap" style="width:100%">
                 <thead>
                   <tr>
-                    <th colspan="2">พนักงาน</th>
-                    <th rowspan="2">จำนวนลูกค้าที่บริการ (คน)</th>
-                    <th colspan="6">จำนวนลูกค้าที่ประเมิน (คน)</th>
-                    <th colspan="3">ประเมินความพึงพอใจ</th>
-                  </tr>
-                  <tr>
-                    <th>รหัสพนักงาน</th>
-                    <th>ชื่อพนักงาน</th>
-                    <th>5 คะแนน</th>
-                    <th>4 คะแนน</th>
-                    <th>3 คะแนน</th>
-                    <th>2 คะแนน</th>
-                    <th>1 คะแนน</th>
-                    <th>ไม่ประเมิน</th>
-                    <th>คะแนนทั้งหมด</th>
-                    <th>คะแนนเฉลี่ย</th>
-                    <th>ร้อยละของความพึงพอใจ</th>
+                    <th>รหัสผู้ให้บริการ</th>
+                    <th>ชื่อผู้ให้บริการ</th>
+                    <th>เวลา Login</th>
+                    <th>เวลา Logout</th>
+                    <th>ระยะเวลาการทำงานทั้งหมด</th>
+                    <th>พัก</th>
+                    <th>จำนวนลูกค้าที่เรียกบริการ</th>
+                    <th>จำนวนลูกค้าที่บริการ</th>
+                    <th>จำนวนลูกค้าที่พลาดการบริการ</th>
+                    <th>ระยะเวลาการทำงานทั้งหมด</th>
+                    <th>ระยะเวลาการให้บริการเฉลี่ย</th>
+                    <th>ระยะเวลาการให้บริการมากที่สุด</th>
                   </tr>
                 </thead>
                 <tbody>
                   <?php
-                  foreach ($employee_group as $index => $employee) { ?>
+                  foreach ($a_analyze as $index => $employee) { ?>
                     <tr>
-                      <th><?php echo $employee['employee_id'];?></th>
-                      <th><?php echo $employee['employee_name'];?></th>
-                      <th><?php echo $employee['amount_customer'];?></th>
-                      <th><?php echo $employee['score_5'];?></th>
-                      <th><?php echo $employee['score_4'];?></th>
-                      <th><?php echo $employee['score_3'];?></th>
-                      <th><?php echo $employee['score_2'];?></th>
-                      <th><?php echo $employee['score_1'];?></th>
-                      <th><?php echo $employee['score_0'];?></th>
-                      <th><?php echo $employee['total_score'];?></th>
-                      <th><?php echo $employee['score_averange'];?></th>
-                      <th><?php echo $employee['satisfaction_percent'];?></th>
+                      <th><?php echo $employee['employee_id']?></th>
+                      <th><?php echo $employee['employee_name']?></th>
+                      <th><?php echo $employee['login_time']?></th>
+                      <th><?php echo $employee['logout_time']?></th>
+                      <th><?php echo $employee['work_all_time']?></th>
+                      <th>X</th>
+                      <th><?php echo $employee['amount_customer']?></th>
+                      <th><?php echo $employee['success_service']?></th>
+                      <th><?php echo $employee['fail_service']?></th>
+                      <th>XX:XX:XX</th>
+                      <th><?php echo $employee['averange_work_time']?></th>
+                      <th><?php echo $employee['max_work_time']?></th>
                     </tr>
                   <?php
                   }
