@@ -40,7 +40,7 @@
                       <th><?php echo $queue['employee_id'];?></th>
                       <th><?php echo $queue['employee_name'];?></th>
                       <th><?php echo $queue['queue'];?></th>
-                      <th>XXXXXXXXXX</th>
+                      <th><?php echo $queue['ca'];?></th>
                       <th><?php echo $queue['queue_create_time'];?></th>
                       <th><?php echo $queue['wait_service_time'];?></th>
                       <th><?php echo $queue['end_service_time'] == NULL ? 'พลาดการบริการ' : $queue['start_service_time'];?></th>
