@@ -19,12 +19,28 @@ class Main extends CI_Controller {
     } else {
       $a_employee_data = $this->Employee_model->get_satisfication_employee_data($this->date);
       $data = array(
+        'pageactive' => 'satisfication',
+        'employee_group' => $a_employee_data
+      );
+      $this->load->view('template/header', $data);
+      $this->load->view('template/sidebar');
+      $this->load->view('satisfication');
+      $this->load->view('template/footer');  
+    }
+  }
+
+  public function analyze(){
+    if($this->_check_cookie()){
+      header("location: " . site_url('admin'));
+    } else {
+      $a_employee_data = $this->Employee_model->get_satisfication_employee_data($this->date);
+      $data = array(
         'pageactive' => 'stat',
         'employee_group' => $a_employee_data
       );
       $this->load->view('template/header', $data);
       $this->load->view('template/sidebar');
-      $this->load->view('stat');
+      $this->load->view('satisfication');
       $this->load->view('template/footer');  
     }
   }

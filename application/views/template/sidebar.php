@@ -16,7 +16,9 @@
   <ul class="sidebar-menu" data-widget="tree">
     <li class="header">เมนู</li>
     <!-- Optionally, you can add icons to the links -->
-    <li class="<?php echo ($pageactive == "stat") ? "active" : "";?>"><a href="<?php echo site_url('/');?>"><i class="fa fa-table"></i> <span>สรุปผลคะแนนของพนักงาน</span></a></li>
+    <li class="<?php echo ($pageactive == "satisfication") ? "active" : "";?>"><a href="<?php echo site_url('/');?>"><i class="fa fa-table"></i> <span>สรุปผลคะแนนของพนักงาน</span></a></li>
+    <li class="<?php echo ($pageactive == "analyze") ? "active" : "";?>"><a href="<?php echo site_url('main/analyze');?>"><i class="fa fa-table"></i> <span>วิเคราะห์การให้บริการ</span></a></li>
+    <li class="<?php echo ($pageactive == "queue") ? "active" : "";?>"><a href="<?php echo site_url('main/queue');?>"><i class="fa fa-table"></i> <span>การใช้คิว</span></a></li>
     <li class="<?php echo ($pageactive == "login") ? "active" : "";?>"><a href="<?php echo site_url('admin/login');?>"><i class="fa fa-user"></i> <span>เข้าสู่ระบบ Admin</span></a></li>
     <!-- /.sidebar-menu -->
 </section>

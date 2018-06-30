@@ -13,6 +13,9 @@ class Admin extends CI_Controller {
   }
   
   public function index(){
+  }
+
+  public function satisfication(){
     if($this->_check_cookie()){
       $cookie = $_COOKIE[$this->cookie_name];
       $tokenexplode = explode(" ", $cookie);
@@ -25,14 +28,14 @@ class Admin extends CI_Controller {
         $a_employee_data = $this->Employee_model->get_satisfication_employee_data($this->date);
         // print_r($a_employee_data);
         $data = array(
-          'pageactive' => 'stat',
+          'pageactive' => 'satisfication',
           'admin_id' => $admin_id,
           'admin' => $admin,
           'employee_group' => $a_employee_data
         );
         $this->load->view('template/header', $data);
         $this->load->view('template/sidebar_admin');
-        $this->load->view('stat');
+        $this->load->view('satisfication');
         $this->load->view('template/footer');
       }
     } else {

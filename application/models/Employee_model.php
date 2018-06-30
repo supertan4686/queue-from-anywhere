@@ -38,6 +38,14 @@ class Employee_model extends CI_Model {
 
 	}
 
+	function get_analyze_employee_data(){
+
+	}
+
+	function get_queue_log_data(){
+		
+	}
+
 	function insert_queue_log($data){
 		$this->db->insert('queue_log', $data);
 	}
