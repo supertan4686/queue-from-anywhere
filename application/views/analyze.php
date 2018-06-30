@@ -24,8 +24,7 @@
                     <th>ชื่อผู้ให้บริการ</th>
                     <th>เวลา Login</th>
                     <th>เวลา Logout</th>
-                    <th>ระยะเวลาการทำงานทั้งหมด</th>
-                    <th>พัก</th>
+                    <th>ระยะเวลาการทำงานทั้งหมดจากเวลา Login และ Logout</th>
                     <th>จำนวนลูกค้าที่เรียกบริการ</th>
                     <th>จำนวนลูกค้าที่บริการ</th>
                     <th>จำนวนลูกค้าที่พลาดการบริการ</th>
@@ -42,12 +41,11 @@
                       <th><?php echo $employee['employee_name']?></th>
                       <th><?php echo $employee['login_time']?></th>
                       <th><?php echo $employee['logout_time']?></th>
-                      <th><?php echo $employee['work_all_time']?></th>
-                      <th>X</th>
+                      <th><?php echo $employee['work_all_time_by_login']?></th>
                       <th><?php echo $employee['amount_customer']?></th>
                       <th><?php echo $employee['success_service']?></th>
                       <th><?php echo $employee['fail_service']?></th>
-                      <th>XX:XX:XX</th>
+                      <th><?php echo $employee['work_all_time_by_employee']?></th>
                       <th><?php echo $employee['averange_work_time']?></th>
                       <th><?php echo $employee['max_work_time']?></th>
                     </tr>

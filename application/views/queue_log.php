@@ -43,9 +43,9 @@
                       <th>XXXXXXXXXX</th>
                       <th><?php echo $queue['queue_create_time'];?></th>
                       <th><?php echo $queue['wait_service_time'];?></th>
-                      <th><?php echo $queue['start_service_time'];?></th>
-                      <th><?php echo $queue['end_service_time'];?></th>
-                      <th><?php echo $queue['score'] == 0 ? 'ไม่ประเมิน' : $queue['score'];?></th>
+                      <th><?php echo $queue['end_service_time'] == NULL ? 'พลาดการบริการ' : $queue['start_service_time'];?></th>
+                      <th><?php echo $queue['end_service_time'] == NULL ? 'พลาดการบริการ' : $queue['end_service_time'];?></th>
+                      <th><?php echo $queue['score'] == 0 ? 'ไม่มีการประเมินคะแนน' : $queue['score'];?></th>
                     </tr>
                   <?php
                   }

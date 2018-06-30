@@ -31,7 +31,7 @@ class Employee_model extends CI_Model {
 	function get_analyze_employee_data($date){
 		/*START SUB QUERY*/
 		// Subquery Get Login Time
-		$selectsub_login_time = "employee_id, min(login_time) AS 'login_time', max(logout_time) AS 'logout_time', TIMEDIFF(logout_time, login_time) AS 'work_all_time'";
+		$selectsub_login_time = "employee_id, min(login_time) AS 'login_time', max(logout_time) AS 'logout_time', TIMEDIFF(logout_time, login_time) AS 'work_all_time_by_login'";
 		$this->db->select($selectsub_login_time);
 		$this->db->where('date', $date);
 		$this->db->group_by("employee_id");
@@ -46,7 +46,7 @@ class Employee_model extends CI_Model {
 		$this->db->reset_query();
 
 		// Subquery Get work time
-		$selectsub_work_time = "employee_id, SEC_TO_TIME(CAST(AVG(TIME_TO_SEC(TIMEDIFF(`end_service_time`, `start_service_time`))) AS int)) AS 'averange_work_time', MAX(TIMEDIFF(`end_service_time`, `start_service_time`)) AS 'max_work_time'";
+		$selectsub_work_time = "employee_id, SEC_TO_TIME(CAST(AVG(TIME_TO_SEC(TIMEDIFF(`end_service_time`, `start_service_time`))) AS int)) AS 'averange_work_time', MAX(TIMEDIFF(`end_service_time`, `start_service_time`)) AS 'max_work_time', SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(`end_service_time`, `start_service_time`)))) AS 'work_all_time_by_employee'";
 		$this->db->select($selectsub_work_time);
 		$this->db->group_by("employee_id");
 		$this->db->where('end_service_time is not null');
@@ -56,9 +56,9 @@ class Employee_model extends CI_Model {
 
 		//Main query
 		$select_employee = "employee.employee_id, CONCAT(employee.employee_name_title, ' ', employee.employee_firstname, ' ', employee.employee_lastname) AS 'employee_name'"; // AS employee
-		$select_login_time = "login.login_time, login.logout_time, login.work_all_time"; // AS login
+		$select_login_time = "login.login_time, login.logout_time, login.work_all_time_by_login"; // AS login
 		$select_amount_customer = "amount.amount_customer, amount.success_service, amount.fail_service"; // AS amount
-		$select_work_time = "work.averange_work_time, work.max_work_time"; // AS work
+		$select_work_time = "work.averange_work_time, work.max_work_time, work.work_all_time_by_employee"; // AS work
 
 		$this->db->select($select_employee . ', ' . $select_login_time . ', ' . $select_amount_customer . ', ' . $select_work_time);
 		$this->db->from('employee');
