@@ -31,7 +31,7 @@ class Employee_model extends CI_Model {
 	function get_analyze_employee_data($date){
 		/*START SUB QUERY*/
 		// Subquery Get Login Time
-		$selectsub_login_time = "employee_id, min(login_time) AS 'login_time', max(logout_time) AS 'logout_time', TIMEDIFF(logout_time, login_time) AS 'work_all_time_by_login'";
+		$selectsub_login_time = "employee_id, min(login_time) AS 'login_time', max(logout_time) AS 'logout_time', TIMEDIFF(max(logout_time), min(login_time)) AS 'work_all_time_by_login'";
 		$this->db->select($selectsub_login_time);
 		$this->db->where('date', $date);
 		$this->db->group_by("employee_id");
