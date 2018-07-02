@@ -29,6 +29,7 @@
                     <th>ระยะเวลารอคอย</th>
                     <th>เวลาเริ่มการบริการ</th>
                     <th>เวลาเสร็จสิ้นการบริการ</th>
+                    <th>ยกเลิกบริการ</th>
                     <th>คะแนนความพึงพอใจ</th>
                   </tr>
                 </thead>
@@ -43,8 +44,9 @@
                       <th><?php echo $queue['ca'];?></th>
                       <th><?php echo $queue['queue_create_time'];?></th>
                       <th><?php echo $queue['wait_service_time'];?></th>
-                      <th><?php echo $queue['end_service_time'] == NULL ? 'พลาดการบริการ' : $queue['start_service_time'];?></th>
-                      <th><?php echo $queue['end_service_time'] == NULL ? 'พลาดการบริการ' : $queue['end_service_time'];?></th>
+                      <th><?php echo $queue['end_service_time'] == NULL ? '-' : $queue['start_service_time'];?></th>
+                      <th><?php echo $queue['end_service_time'] == NULL ? '-' : $queue['end_service_time'];?></th>
+                      <th><?php echo $queue['end_service_time'] == NULL ? 'ยกเลิกบริการ' : 'บริการปกติ';?></th>
                       <th><?php echo $queue['score'] == 0 ? 'ไม่มีการประเมินคะแนน' : $queue['score'];?></th>
                     </tr>
                   <?php
