@@ -1,4 +1,5 @@
 <?php
+include(FCPATH . 'assets/phpqrcode/qrlib.php');
 
 class Admin extends CI_Controller {
   
@@ -323,6 +324,11 @@ class Admin extends CI_Controller {
       'result' => 'success',
       'service_id' => $service_id);
     return echo_json($result);
+  }
+
+  public function get_qrcode_employee(){
+    $employee_id = $this->input->get('id');
+    QRcode::png($employee_id, false, QR_ECLEVEL_L, 10, 3);
   }
 
   public function submit_satisfication_data(){
