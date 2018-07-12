@@ -34,7 +34,6 @@ class Main extends CI_Controller {
       header("location: " . site_url('admin/analyze'));
     } else {
       $a_analyze_data = $this->Employee_model->get_analyze_employee_data($this->date);
-      // print_r($a_analyze_data);
       $data = array(
         'pageactive' => 'analyze',
         'a_analyze' => $a_analyze_data

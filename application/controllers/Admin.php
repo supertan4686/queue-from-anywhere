@@ -27,7 +27,6 @@ class Admin extends CI_Controller {
       } else {
         $admin =  $this->Admin_model->get_admin_by_id($admin_id);
         $a_employee_data = $this->Employee_model->get_satisfication_employee_data($this->date);
-        // print_r($a_employee_data);
         $data = array(
           'pageactive' => 'satisfication',
           'admin_id' => $admin_id,
@@ -82,7 +81,6 @@ class Admin extends CI_Controller {
       } else {
         $admin =  $this->Admin_model->get_admin_by_id($admin_id);
         $queue_log = $this->Employee_model->get_queue_log_data($this->date);
-        // print_r($a_employee_data);
         $data = array(
           'pageactive' => 'queue',
           'queue_log' => $queue_log,

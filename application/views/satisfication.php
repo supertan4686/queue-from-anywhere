@@ -45,16 +45,16 @@
                     <tr>
                       <th><?php echo $employee['employee_id'];?></th>
                       <th><?php echo $employee['employee_name'];?></th>
-                      <th><?php echo $employee['amount_customer'];?></th>
-                      <th><?php echo $employee['score_5'];?></th>
-                      <th><?php echo $employee['score_4'];?></th>
-                      <th><?php echo $employee['score_3'];?></th>
-                      <th><?php echo $employee['score_2'];?></th>
-                      <th><?php echo $employee['score_1'];?></th>
-                      <th><?php echo $employee['score_0'];?></th>
-                      <th><?php echo $employee['total_score'];?></th>
-                      <th><?php echo $employee['score_averange'];?></th>
-                      <th><?php echo $employee['satisfaction_percent'];?></th>
+                      <th><?php echo $employee['amount_customer'] != "" ? $employee['amount_customer'] : "0";?></th>
+                      <th><?php echo $employee['score_5'] != "" ? $employee['score_5'] : "0";?></th>
+                      <th><?php echo $employee['score_4'] != "" ? $employee['score_4'] : "0";?></th>
+                      <th><?php echo $employee['score_3'] != "" ? $employee['score_3'] : "0";?></th>
+                      <th><?php echo $employee['score_2'] != "" ? $employee['score_2'] : "0";?></th>
+                      <th><?php echo $employee['score_1'] != "" ? $employee['score_1'] : "0";?></th>
+                      <th><?php echo $employee['score_0'] != "" ? $employee['score_0'] : "0";?></th>
+                      <th><?php echo $employee['total_score'] != "" ? $employee['total_score'] : "0";?></th>
+                      <th><?php echo $employee['score_averange'] != "" ? $employee['score_averange'] : "0";?></th>
+                      <th><?php echo $employee['satisfaction_percent'] != "" ? $employee['satisfaction_percent'] : "0";?></th>
                     </tr>
                   <?php
                   }

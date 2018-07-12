@@ -45,15 +45,15 @@
                     <tr>
                       <th><?php echo $employee['employee_id']?></th>
                       <th><?php echo $employee['employee_name']?></th>
-                      <th><?php echo $employee['login_time']?></th>
-                      <th><?php echo $employee['logout_time']?></th>
-                      <th><?php echo $employee['work_all_time_by_login']?></th>
-                      <th><?php echo $employee['amount_customer']?></th>
-                      <th><?php echo $employee['success_service']?></th>
-                      <th><?php echo $employee['fail_service']?></th>
-                      <th><?php echo $employee['work_all_time_by_employee']?></th>
-                      <th><?php echo $employee['averange_work_time']?></th>
-                      <th><?php echo $employee['max_work_time']?></th>
+                      <th><?php echo $employee['login_time'] != "" ? $employee['login_time'] : "ไม่ได้มีการทำงาน";?></th>
+                      <th><?php echo $employee['logout_time'] != "" ? $employee['logout_time'] : "ไม่ได้มีการทำงาน";?></th>
+                      <th><?php echo $employee['work_all_time_by_login'] != "" ? $employee['work_all_time_by_login'] : "ไม่ได้มีการทำงาน";?></th>
+                      <th><?php echo $employee['amount_customer'] != "" ? $employee['amount_customer'] : "0";?></th>
+                      <th><?php echo $employee['success_service'] != "" ? $employee['success_service'] : "0";?></th>
+                      <th><?php echo $employee['fail_service'] != "" ? $employee['fail_service'] : "0";?></th>
+                      <th><?php echo $employee['work_all_time_by_employee'] != "" ? $employee['work_all_time_by_employee'] : "ไม่ได้มีการทำงาน";?></th>
+                      <th><?php echo $employee['averange_work_time'] != "" ? $employee['averange_work_time'] : "ไม่ได้มีการทำงาน";?></th>
+                      <th><?php echo $employee['max_work_time'] != "" ? $employee['max_work_time'] : "ไม่ได้มีการบริการ";?></th>
                     </tr>
                   <?php
                   }
