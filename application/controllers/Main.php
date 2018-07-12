@@ -7,7 +7,7 @@ class Main extends CI_Controller {
     $this->load->model('Admin_model');
     $this->load->model('Employee_model');
     $this->cookie_name = 'peastat';
-    $this->date = '2018-06-01';
+    $this->date = date('Y-m-d');
   }
   
   public function index(){
