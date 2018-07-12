@@ -55,7 +55,7 @@
                       <td>
                         <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#qrcodeModal" onclick="get_qrcode_employee('<?php echo $employee['employee_id'];?>');"><i class="fa fa-qrcode"></i> QR Code</button>
                         <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#formEmployeeModal" onclick="get_employee('<?php echo $employee['employee_id'];?>');">แก้ไข</button>
-                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal" >ลบ</button>
+                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal" onclick="set_employee_to_delete('<?php echo $employee['employee_id'];?>')">ลบ</button>
                       </td>
                     </tr>
                   <?php
@@ -182,6 +182,11 @@
       </div>
     </div>
     <!-- /.Modal QRcode -->
+
+    <!-- Value Hidden -->
+      <input type="hidden" id="employee_delete" name="employee_delete" value="">
+    <!-- /.Value Hidden -->
+
   </div>
   <!-- /.content-wrapper -->
 
@@ -235,7 +240,8 @@
       });
     }
 
-    function delete_employee(employee_id){
+    function delete_employee(){
+      var employee_id = $('#employee_delete').val();
       $.ajax({
         url: url +'admin/ajax_delete_employee',
         type:'POST',
@@ -252,6 +258,10 @@
           }
         }
       });
+    }
+
+    function set_employee_to_delete(employee_id){
+      $('#employee_delete').attr('value', employee_id);
     }
 
     function init_new_form(){

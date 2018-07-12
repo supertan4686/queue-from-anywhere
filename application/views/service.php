@@ -56,7 +56,7 @@
                       <td><?php echo $service['service_end_queue'];?></td>
                       <td>
                         <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#formServiceModal" onclick="get_service('<?php echo $service['service_id'];?>');">แก้ไข</button>
-                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal" onclick="">ลบ</button>
+                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal" onclick="set_service_to_delete('<?php echo $service['service_id'];?>')">ลบ</button>
                       </td>
                     </tr>
                   <?php
@@ -154,6 +154,11 @@
       </div>
     </div>
     <!-- /.Modal Delete -->
+
+    <!-- Value Hidden -->
+      <input type="hidden" id="service_delete" name="service_delete" value="">
+    <!-- /.Value Hidden -->
+
   </div>
   <!-- /.content-wrapper -->
 
@@ -200,7 +205,12 @@
       });
     }
 
-    function delete_service(service_id){
+    function set_service_to_delete(service_id){
+      $('#service_delete').attr('value', service_id);
+    }
+
+    function delete_service(){
+      var service_id = $('#service_delete').val();
       $.ajax({
         url: url +'admin/ajax_delete_service',
         type:'POST',

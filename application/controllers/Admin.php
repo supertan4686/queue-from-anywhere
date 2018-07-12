@@ -273,6 +273,7 @@ class Admin extends CI_Controller {
   public function ajax_delete_employee(){
     $employee_id = $this->input->post('employee_id');
     $this->Employee_model->delete_employee($employee_id);
+    // echo $this->db->last_query();
     $result = array(
       'type' => 'delete',
       'result' => 'success',
