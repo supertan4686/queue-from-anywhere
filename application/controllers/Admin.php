@@ -10,7 +10,7 @@ class Admin extends CI_Controller {
     $this->load->model('Service_model');
     $this->load->helper('common_helper');
     $this->cookie_name = 'peastat';
-    $this->date = '2018-06-01';
+    $this->date = date('Y-m-d');
   }
   
   public function index(){
