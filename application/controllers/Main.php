@@ -54,7 +54,7 @@ class Main extends CI_Controller {
       header("location: " . site_url('admin/queue'));
     } else {
       $queue_log = $this->Employee_model->get_queue_log_data($this->date);
-      echo $this->db->last_query();die();
+      // echo $this->db->last_query();die();
       $data = array(
         'pageactive' => 'queue',
         'queue_log' => $queue_log
