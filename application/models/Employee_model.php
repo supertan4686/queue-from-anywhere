@@ -9,27 +9,27 @@ class Employee_model extends CI_Model {
 	function get_satisfication_employee_data($date){
 	
 		//Sub query
-		$selectemployee_id = "queue_log.employee_id, ";
-		$select_amount_customer = "count(queue_log.score) AS 'amount_customer', ";
-		$select_evaluation_amount = "SUM(queue_log.score) AS 'total_score', SUM(CASE queue_log.score WHEN '0' THEN 1 ELSE 0 END) AS 'score_0', SUM(CASE queue_log.score WHEN '1' THEN 1 ELSE 0 END) AS 'score_1', SUM(CASE queue_log.score WHEN '2' THEN 1 ELSE 0 END) AS 'score_2', SUM(CASE queue_log.score WHEN '3' THEN 1 ELSE 0 END) AS 'score_3', SUM(CASE queue_log.score WHEN '4' THEN 1 ELSE 0 END) AS 'score_4', SUM(CASE queue_log.score WHEN '5' THEN 1 ELSE 0 END) AS 'score_5', ";
-		$select_score_averange = "((1 * SUM(CASE queue_log.score WHEN '1' THEN 1 ELSE 0 END)) + (2 * SUM(CASE queue_log.score WHEN '2' THEN 1 ELSE 0 END)) + (3 * SUM(CASE queue_log.score WHEN '3' THEN 1 ELSE 0 END)) + (4 * SUM(CASE queue_log.score WHEN '4' THEN 1 ELSE 0 END)) + (5 * SUM(CASE queue_log.score WHEN '5' THEN 1 ELSE 0 END))) / count(CASE WHEN queue_log.score != '0' THEN 1 ELSE null END) AS 'score_averange', ";
-		$select_satisfaction_percent = "(((1 * SUM(CASE queue_log.score WHEN '1' THEN 1 ELSE 0 END)) + (2 * SUM(CASE queue_log.score WHEN '2' THEN 1 ELSE 0 END)) + (3 * SUM(CASE queue_log.score WHEN '3' THEN 1 ELSE 0 END)) + (4 * SUM(CASE queue_log.score WHEN '4' THEN 1 ELSE 0 END)) + (5 * SUM(CASE queue_log.score WHEN '5' THEN 1 ELSE 0 END))) * 100) / (count(CASE WHEN queue_log.score != '0' THEN 1 ELSE null END) * 5) AS 'satisfaction_percent'";
+		$selectsub_employee_id = "employee_id,";
+		$selectsub_amount_customer = "count(score) AS 'amount_customer',";
+		$selectsub_score_data = "	SUM(CASE score WHEN '0' THEN 1 ELSE 0 END) AS 'score_0', SUM(CASE score WHEN '1' THEN 1 ELSE 0 END) AS 'score_1', SUM(CASE score WHEN '2' THEN 1 ELSE 0 END) AS 'score_2', SUM(CASE score WHEN '3' THEN 1 ELSE 0 END) AS 'score_3', SUM(CASE score WHEN '4' THEN 1 ELSE 0 END) AS 'score_4', 
+		SUM(CASE score WHEN '5' THEN 1 ELSE 0 END) AS 'score_5', SUM(score) AS 'total_score', ";
+		$selectsub_satisfication_data = "((1 * SUM(CASE score WHEN '1' THEN 1 ELSE 0 END)) + (2 * SUM(CASE score WHEN '2' THEN 1 ELSE 0 END)) + (3 * SUM(CASE score WHEN '3' THEN 1 ELSE 0 END)) + (4 * SUM(CASE score WHEN '4' THEN 1 ELSE 0 END)) + (5 * SUM(CASE score WHEN '5' THEN 1 ELSE 0 END))) / count(CASE WHEN score != '0' THEN 1 ELSE null END) AS 'score_averange', (((1 * SUM(CASE score WHEN '1' THEN 1 ELSE 0 END)) + (2 * SUM(CASE score WHEN '2' THEN 1 ELSE 0 END)) + (3 * SUM(CASE score WHEN '3' THEN 1 ELSE 0 END)) + (4 * SUM(CASE score WHEN '4' THEN 1 ELSE 0 END)) + (5 * SUM(CASE score WHEN '5' THEN 1 ELSE 0 END))) * 100) / (count(CASE WHEN score != '0' THEN 1 ELSE null END) * 5) AS 'satisfaction_percent'";
 
-		$this->db->select($selectemployee_id . $select_amount_customer . $select_evaluation_amount . $select_score_averange . $select_satisfaction_percent);
+		$this->db->select($selectsub_employee_id . $selectsub_amount_customer . $selectsub_score_data . $selectsub_satisfication_data);
+		$this->db->join('time_score', 'time_score.queue_log_id = queue_log.queue_log_id');
 		$this->db->where('date', $date);
 		$this->db->group_by("queue_log.employee_id");
-
 
 		$subquery_satisfication = $this->db->get_compiled_select('queue_log', FALSE);
 		$this->db->reset_query();
 
 
 		//Main query
-		$selectmain = "employee.employee_id,CONCAT(employee.employee_name_title, ' ', `employee`.`employee_firstname`, ' ', employee.employee_lastname) AS 'employee_name', queue_log.amount_customer, queue_log.total_score, queue_log.score_averange, queue_log.score_0, queue_log.score_1, queue_log.score_2, queue_log.score_3, queue_log.score_4, queue_log.score_5, queue_log.satisfaction_percent";
+		$selectmain = "employee.employee_id, CONCAT(employee.employee_name_title, ' ', `employee`.`employee_firstname`, ' ', employee.employee_lastname) AS 'employee_name', satisfication.amount_customer,satisfication.score_0,satisfication.score_1,satisfication.score_2,satisfication.score_3,satisfication.score_4,  satisfication.score_5,satisfication.total_score,satisfication.score_averange,satisfication.satisfaction_percent";
 
 		$this->db->select($selectmain);
 		$this->db->from('employee');
-		$this->db->join(' (' . $subquery_satisfication . ') AS queue_log', 'employee.employee_id = queue_log.employee_id', 'left outer');
+		$this->db->join(' (' . $subquery_satisfication . ') AS satisfication', 'employee.employee_id = satisfication.employee_id', 'left outer');
 		$this->db->group_by("employee.employee_id");
 		//Get query result
 		$result = $this->db->get()->result_array();
