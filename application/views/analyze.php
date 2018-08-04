@@ -21,16 +21,13 @@
                 <thead>
                   <tr>
                     <th colspan=2>พนักงาน</th>
-                    <th colspan=3>เวลาการทำงาน</th>
                     <th colspan=3>จำนวนลูกค้า (คน)</th>
                     <th colspan=3>เวลาการให้บริการ</th>
                   </tr>
                   <tr>
                     <th>รหัสผู้ให้บริการ</th>
                     <th>ชื่อผู้ให้บริการ</th>
-                    <th>เวลา Login</th>
-                    <th>เวลา Logout</th>
-                    <th>ระยะเวลาการทำงานทั้งหมด</th>
+                    <!-- <th>ระยะเวลาการทำงานทั้งหมด</th> -->
                     <th>จำนวนลูกค้าที่เรียกบริการ</th>
                     <th>จำนวนลูกค้าที่บริการ</th>
                     <th>จำนวนลูกค้าที่พลาดการบริการ</th>
@@ -45,9 +42,7 @@
                     <tr>
                       <th><?php echo $employee['employee_id']?></th>
                       <th><?php echo $employee['employee_name']?></th>
-                      <th><?php echo $employee['login_time'] != "" ? $employee['login_time'] : "ไม่ได้มีการทำงาน";?></th>
-                      <th><?php echo $employee['logout_time'] != "" ? $employee['logout_time'] : "ไม่ได้มีการทำงาน";?></th>
-                      <th><?php echo $employee['work_all_time_by_login'] != "" ? $employee['work_all_time_by_login'] : "ไม่ได้มีการทำงาน";?></th>
+                      <!-- <th><?php echo $employee['work_all_time_by_login'] != "" ? $employee['work_all_time_by_login'] : "ไม่ได้มีการทำงาน";?></th> -->
                       <th><?php echo $employee['amount_customer'] != "" ? $employee['amount_customer'] : "0";?></th>
                       <th><?php echo $employee['success_service'] != "" ? $employee['success_service'] : "0";?></th>
                       <th><?php echo $employee['fail_service'] != "" ? $employee['fail_service'] : "0";?></th>

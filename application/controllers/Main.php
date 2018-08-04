@@ -7,8 +7,8 @@ class Main extends CI_Controller {
     $this->load->model('Admin_model');
     $this->load->model('Employee_model');
     $this->cookie_name = 'peastat';
-    $this->date = date('Y-m-d');
-    // $this->date = "2018-08-02";
+    // $this->date = date('Y-m-d');
+    $this->date = "2018-08-02";
 
   }
   
@@ -37,7 +37,7 @@ class Main extends CI_Controller {
       header("location: " . site_url('admin/analyze'));
     } else {
       $a_analyze_data = $this->Employee_model->get_analyze_employee_data($this->date);
-      echo $this->db->last_query();die();
+      // echo $this->db->last_query();die();
       $data = array(
         'pageactive' => 'analyze',
         'a_analyze' => $a_analyze_data
