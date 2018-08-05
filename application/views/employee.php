@@ -171,11 +171,11 @@
             <h4 class="modal-title" id="qrcodeLabel"></h4>
           </div>
           <div class="modal-body">
-            <div class="row" style="text-align: center;">
-                <img src="" name="imgqrcode" id="imgqrcode">
+            <div class="row" style="text-align: center; margin-bottom:10px;">
+                <img src="" name="imgbarcode" id="imgbarcode">
             </div>
             <div class="row" style="text-align: center;">
-              <a class="btn btn-primary" href="" download="" name="linkqrcode" id="linkqrcode">ดาวน์โหลด QR Code</a>
+              <a class="btn btn-primary" href="" download="" name="linkbarcode" id="linkbarcode">ดาวน์โหลด Barcode</a>
             </div>
           </div>
         </div>
@@ -195,8 +195,14 @@
 
     function get_qrcode_employee(employee_id){
       $('#qrcodeLabel').text('Barcode พนักงานรหัส ' + employee_id);
-      $('#imgqrcode').attr('src', url + 'admin/get_qrcode_employee?id=' + employee_id);
-      $('#linkqrcode').attr('href', url + 'admin/get_qrcode_employee?id=' + employee_id).attr('download', employee_id + '.png');
+      $.ajax({
+        url: url +'admin/get_barcode_employee?employee_id=' + employee_id,
+        type:'GET',
+        success: function (result) {
+          $('#imgbarcode').attr('src', result);
+          $('#linkbarcode').attr('href', result).attr('download', employee_id + '.png');
+        }
+      });
     }
 
     function get_employee(employee_id){

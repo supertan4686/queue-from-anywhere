@@ -1,5 +1,6 @@
 <?php
 include(FCPATH . 'assets/phpqrcode/qrlib.php');
+require FCPATH . 'assets/vendor/autoload.php';
 require_once FCPATH. 'assets/spout-2.7.3/src/Spout/Autoloader/autoload.php';
 use Box\Spout\Common\Type;
 use Box\Spout\Writer\Style\Border;
@@ -464,6 +465,17 @@ class Admin extends CI_Controller {
   public function get_qrcode_employee(){
     $employee_id = $this->input->get('id');
     QRcode::png($employee_id, false, QR_ECLEVEL_L, 10, 3);
+  }
+
+  public function get_barcode_employee(){
+    $employee_id = $this->input->get('id');
+
+    $generator = new Picqer\Barcode\BarcodeGeneratorPNG();
+    echo 'data:image/png;base64,' . base64_encode($generator->getBarcode($employee_id, $generator::TYPE_CODE_128, 3, 100));
+    // echo '<img src="data:image/png;base64,' . base64_encode($generator->getBarcode($employee_id, $generator::TYPE_CODE_128, 3, 100)) . '">';
+  
+    // $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
+    // echo $generator->getBarcode($employee_id, $generator::TYPE_CODE_128);
   }
 
   public function submit_satisfication_data(){
