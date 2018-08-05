@@ -8,6 +8,11 @@
     <!-- DataTables -->
     <script src="<?php echo base_url() . "assets/AdminLTE-2.4.3/"?>bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="<?php echo base_url() . "assets/AdminLTE-2.4.3/"?>bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <!-- date-range-picker -->
+    <script src="<?php echo base_url() . "assets/AdminLTE-2.4.3/"?>bower_components/moment/min/moment.min.js"></script>
+    <script src="<?php echo base_url() . "assets/AdminLTE-2.4.3/"?>bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <!-- bootstrap datepicker -->
+    <script src="<?php echo base_url() . "assets/AdminLTE-2.4.3/"?>bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
     <!-- SlimScroll -->
     <script src="<?php echo base_url() . "assets/AdminLTE-2.4.3/"?>bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
     <!-- FastClick -->
@@ -21,6 +26,12 @@
       $(function () {
         $('#example1').DataTable({
           "scrollX": true
+        })
+         //Date range picker
+        $('#daterange').daterangepicker({
+          locale: {
+            format: 'YYYY-MM-DD'
+          }
         })
       })
     </script>

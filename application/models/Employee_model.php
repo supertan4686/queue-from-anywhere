@@ -6,7 +6,7 @@ class Employee_model extends CI_Model {
 		$this->load->database();
 	}
 
-	function get_satisfication_employee_data($date){
+	function get_satisfication_employee_data($startdate, $enddate=""){
 	
 		//Sub query
 		$selectsub_employee_id = "employee_id,";
@@ -17,7 +17,12 @@ class Employee_model extends CI_Model {
 
 		$this->db->select($selectsub_employee_id . $selectsub_amount_customer . $selectsub_score_data . $selectsub_satisfication_data);
 		$this->db->join('time_score', 'time_score.queue_log_id = queue_log.queue_log_id');
-		$this->db->where('date', $date);
+		if($enddate == ""){
+			$this->db->where('date', $startdate);
+		} else {
+			$this->db->where('date >=', $startdate);
+			$this->db->where('date <=', $enddate);
+		}
 		$this->db->group_by("queue_log.employee_id");
 
 		$subquery_satisfication = $this->db->get_compiled_select('queue_log', FALSE);
@@ -37,7 +42,7 @@ class Employee_model extends CI_Model {
 
 	}
 
-	function get_analyze_employee_data($date){
+	function get_analyze_employee_data($startdate, $enddate=""){
 		/*START SUB QUERY*/
 		// Subquery Get Login Time
 		// $selectsub_login_time = "employee_id, min(login_time) AS 'login_time', max(logout_time) AS 'logout_time', TIMEDIFF(max(logout_time), min(login_time)) AS 'work_all_time_by_login'";
@@ -53,7 +58,12 @@ class Employee_model extends CI_Model {
 		$selectsub_amount_customer = "employee_id, count(score) AS 'amount_customer', count(CASE WHEN `end_service_time` is not null THEN 1 ELSE null END) AS 'success_service', count(CASE WHEN `end_service_time` is null THEN 1 ELSE null END) AS 'fail_service'";
 		$this->db->select($selectsub_amount_customer);
 		$this->db->join('time_score', 'queue_log.queue_log_id = time_score.queue_log_id');
-		$this->db->where('date', $date);
+		if($enddate == ""){
+			$this->db->where('date', $startdate);
+		} else {
+			$this->db->where('date >=', $startdate);
+			$this->db->where('date <=', $enddate);
+		}
 		$this->db->group_by("employee_id");
 		$subquery_amount_customer = $this->db->get_compiled_select('queue_log', FALSE);
 		$this->db->reset_query();
@@ -64,7 +74,12 @@ class Employee_model extends CI_Model {
 		$this->db->join('queue_log', 'queue_log.queue_log_id = time_score.queue_log_id');
 		$this->db->group_by("employee_id");
 		$this->db->where('end_service_time is not null');
-		$this->db->where('date', $date);
+		if($enddate == ""){
+			$this->db->where('date', $startdate);
+		} else {
+			$this->db->where('date >=', $startdate);
+			$this->db->where('date <=', $enddate);
+		}
 		$subquery_work_time = $this->db->get_compiled_select('time_score', FALSE);
 		$this->db->reset_query();
 		/*END SUB QUERY*/
@@ -88,12 +103,17 @@ class Employee_model extends CI_Model {
 		return $result;
 	}
 
-	function get_queue_log_data($date){
+	function get_queue_log_data($startdate, $enddate=""){
 		$selectmain = "queue_log.queue_log_id, queue_log.counter_id, queue_log.employee_id, CONCAT(employee.employee_name_title, ' ', employee.employee_firstname, ' ', employee.employee_lastname) AS 'employee_name', CONCAT(queue_type_id, queue_number) AS 'queue', ca_log.ca, queue_log.queue_create_time, TIMEDIFF(time_score.start_service_time, queue_log.queue_create_time) AS 'wait_service_time', time_score.start_service_time, time_score.end_service_time, time_score.score";
 
 		$this->db->select($selectmain);
 		$this->db->from('queue_log');
-		$this->db->where('date', $date);
+		if($enddate == ""){
+			$this->db->where('date', $startdate);
+		} else {
+			$this->db->where('date >=', $startdate);
+			$this->db->where('date <=', $enddate);
+		}
 		$this->db->join('time_score', 'queue_log.queue_log_id = time_score.queue_log_id');
 		$this->db->join('ca_log', 'ca_log.queue_log_id = queue_log.queue_log_id');
 		$this->db->join('employee', 'employee.employee_id = queue_log.employee_id');

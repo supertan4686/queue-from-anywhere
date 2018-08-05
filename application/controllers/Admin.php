@@ -25,12 +25,29 @@ class Admin extends CI_Controller {
       if($admin_id == NULL){
         header("location: " . site_url('admin/login'));
       } else {
+
         $admin =  $this->Admin_model->get_admin_by_id($admin_id);
-        $a_employee_data = $this->Employee_model->get_satisfication_employee_data($this->date);
+        $dateinput = $this->input->get('daterange');
+        if($dateinput == ""){
+          $startdate = $this->date;
+          $enddate = $this->date;
+        } else {
+          $daterange = explode(" ", $dateinput);
+          $startdate = $daterange[0];
+          $enddate = $daterange[2];
+        }
+  
+        if($startdate == $enddate){
+          $a_employee_data = $this->Employee_model->get_satisfication_employee_data($startdate);
+        } else {
+          $a_employee_data = $this->Employee_model->get_satisfication_employee_data($startdate, $enddate);
+        }
+        
         $data = array(
           'pageactive' => 'satisfication',
           'admin_id' => $admin_id,
           'admin' => $admin,
+          'dateselected' => isset($dateinput) ? $dateinput : "",
           'employee_group' => $a_employee_data
         );
         $this->load->view('template/header', $data);
@@ -53,11 +70,26 @@ class Admin extends CI_Controller {
         header("location: " . site_url('admin/login'));
       } else {
         $admin =  $this->Admin_model->get_admin_by_id($admin_id);
-        $a_analyze_data = $this->Employee_model->get_analyze_employee_data($this->date);
+        $dateinput = $this->input->get('daterange');
+        if($dateinput == ""){
+          $startdate = $this->date;
+          $enddate = $this->date;
+        } else {
+          $daterange = explode(" ", $dateinput);
+          $startdate = $daterange[0];
+          $enddate = $daterange[2];
+        }
+
+        if($startdate == $enddate){
+          $a_analyze_data = $this->Employee_model->get_analyze_employee_data($startdate);
+        } else {
+          $a_analyze_data = $this->Employee_model->get_analyze_employee_data($startdate, $enddate);
+        }        
         $data = array(
           'pageactive' => 'analyze',
           'admin_id' => $admin_id,
           'admin' => $admin,
+          'dateselected' => isset($dateinput) ? $dateinput : "",
           'a_analyze' => $a_analyze_data
         );
         $this->load->view('template/header', $data);
@@ -80,12 +112,28 @@ class Admin extends CI_Controller {
         header("location: " . site_url('admin/login'));
       } else {
         $admin =  $this->Admin_model->get_admin_by_id($admin_id);
-        $queue_log = $this->Employee_model->get_queue_log_data($this->date);
+        $dateinput = $this->input->get('daterange');
+        if($dateinput == ""){
+          $startdate = $this->date;
+          $enddate = $this->date;
+        } else {
+          $daterange = explode(" ", $dateinput);
+          $startdate = $daterange[0];
+          $enddate = $daterange[2];
+        }
+  
+        if($startdate == $enddate){
+          $queue_log = $this->Employee_model->get_queue_log_data($startdate);
+        } else {
+          $queue_log = $this->Employee_model->get_queue_log_data($startdate, $enddate);
+        }
+
         $data = array(
           'pageactive' => 'queue',
           'queue_log' => $queue_log,
           'admin_id' => $admin_id,
-          'admin' => $admin,
+          'dateselected' => isset($dateinput) ? $dateinput : "",
+          'admin' => $admin
         );
         $this->load->view('template/header', $data);
         $this->load->view('template/sidebar_admin');

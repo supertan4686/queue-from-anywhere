@@ -9,6 +9,33 @@
 
     <!-- Main content -->
     <section class="content">
+      <form action="<?php echo isset($admin_id) ? site_url('admin/queue') : site_url('main/queue');?>" method="get">
+        <div class="row">
+          <div class="col-xs-1" style="margin-top:8px;">
+            <label>ข้อมูลวันที่</label>
+          </div>
+          <div class="col-xs-7">
+            <!-- Date range -->
+            <div class="form-group">
+              <div class="input-group">
+                <div class="input-group-addon">
+                  <i class="fa fa-calendar"></i>
+                </div>
+                <input type="text" class="form-control pull-right" name="daterange" id="daterange" value="<?php echo $dateselected != "" ?  $dateselected : ""?>">
+              </div>
+              <!-- /.input group -->
+            </div>
+            <!-- /.form group -->
+          </div>
+          <div class="col-xs-2">
+            <button class="btn btn-primary btn-block"><i class="fa fa-search"></i> &nbsp; &nbsp;ค้นหา</button>
+          </div>
+          <div class="col-xs-2">
+            <button class="btn btn-success btn-block"><i class="fa fa-table"></i> &nbsp; &nbsp;Export Excel</button>
+          </div>
+        </div>
+      </form>
+
       <div class="row">
         <div class="col-xs-12">
           <div class="box">

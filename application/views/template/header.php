@@ -17,6 +17,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="<?php echo base_url() . "assets/AdminLTE-2.4.3/"?>bower_components/Ionicons/css/ionicons.min.css">
   <!-- DataTables -->
   <link rel="stylesheet" href="<?php echo base_url() . "assets/AdminLTE-2.4.3/"?>bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+  <!-- daterange picker -->
+  <link rel="stylesheet" href="<?php echo base_url() . "assets/AdminLTE-2.4.3/"?>bower_components/bootstrap-daterangepicker/daterangepicker.css">
+  <!-- bootstrap datepicker -->
+  <link rel="stylesheet" href="<?php echo base_url() . "assets/AdminLTE-2.4.3/"?>bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="<?php echo base_url() . "assets/AdminLTE-2.4.3/"?>dist/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
