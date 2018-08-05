@@ -104,7 +104,7 @@ class Employee_model extends CI_Model {
 	}
 
 	function get_queue_log_data($startdate, $enddate=""){
-		$selectmain = "queue_log.counter_id, queue_log.employee_id, CONCAT(employee.employee_name_title, ' ', employee.employee_firstname, ' ', employee.employee_lastname) AS 'employee_name', CONCAT(queue_type_id, queue_number) AS 'queue', ca_log.ca, queue_log.queue_create_time, TIMEDIFF(time_score.start_service_time, queue_log.queue_create_time) AS 'wait_service_time', time_score.start_service_time, time_score.end_service_time, time_score.score";
+		$selectmain = "queue_log.counter_id, queue_log.employee_id, CONCAT(employee.employee_name_title, ' ', employee.employee_firstname, ' ', employee.employee_lastname) AS 'employee_name', CONCAT(queue_type_id, queue_number) AS 'queue', coalesce(ca_log.ca, 'ไม่มีรหัสลูกค้าจากบิล') AS 'ca', queue_log.queue_create_time, TIMEDIFF(time_score.start_service_time, queue_log.queue_create_time) AS 'wait_service_time', time_score.start_service_time, coalesce(time_score.end_service_time, 'ยกเลิกบริการ') AS 'end_service_time', time_score.score";
 
 		$this->db->select($selectmain);
 		$this->db->from('queue_log');
@@ -115,7 +115,7 @@ class Employee_model extends CI_Model {
 			$this->db->where('date <=', $enddate);
 		}
 		$this->db->join('time_score', 'queue_log.queue_log_id = time_score.queue_log_id');
-		$this->db->join('ca_log', 'ca_log.queue_log_id = queue_log.queue_log_id');
+		$this->db->join('ca_log', 'ca_log.queue_log_id = queue_log.queue_log_id', 'left outer');
 		$this->db->join('employee', 'employee.employee_id = queue_log.employee_id');
 
 		//Get query result

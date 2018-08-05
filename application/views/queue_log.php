@@ -71,9 +71,9 @@
                       <th><?php echo $queue['ca'];?></th>
                       <th><?php echo $queue['queue_create_time'];?></th>
                       <th><?php echo $queue['wait_service_time'];?></th>
-                      <th><?php echo $queue['end_service_time'] == NULL ? '-' : $queue['start_service_time'];?></th>
-                      <th><?php echo $queue['end_service_time'] == NULL ? '-' : $queue['end_service_time'];?></th>
-                      <th><?php echo $queue['end_service_time'] == NULL ? 'ยกเลิกบริการ' : 'บริการปกติ';?></th>
+                      <th><?php echo $queue['start_service_time'];?></th>
+                      <th><?php echo $queue['end_service_time'] == 'ยกเลิกบริการ' ? '-' : $queue['end_service_time'];?></th>
+                      <th><?php echo $queue['end_service_time'] == 'ยกเลิกบริการ' ? 'ยกเลิกบริการ' : 'บริการปกติ';?></th>
                       <th><?php echo $queue['score'] == 0 ? 'ไม่มีการประเมินคะแนน' : $queue['score'];?></th>
                     </tr>
                   <?php

@@ -63,7 +63,7 @@ class Admin extends CI_Controller {
         $this->load->view('satisfication');
         $this->load->view('template/footer');
 
-        print_r($a_employee_data);
+        // print_r($a_employee_data);
       }
     } else {
       header("location: " . site_url('admin/login'));
@@ -106,7 +106,7 @@ class Admin extends CI_Controller {
         $this->load->view('template/sidebar_admin');
         $this->load->view('analyze');
         $this->load->view('template/footer');
-        print_r($a_analyze_data);
+        // print_r($a_analyze_data);
 
       }
     } else {
@@ -140,6 +140,8 @@ class Admin extends CI_Controller {
           $queue_log = $this->Employee_model->get_queue_log_data($startdate, $enddate);
         }
 
+        echo $this->db->last_query();
+
         $data = array(
           'pageactive' => 'queue',
           'queue_log' => $queue_log,
@@ -151,7 +153,7 @@ class Admin extends CI_Controller {
         $this->load->view('template/sidebar_admin');
         $this->load->view('queue_log');
         $this->load->view('template/footer');
-        print_r($queue_log);
+        // print_r($queue_log);
       }
     } else {
       header("location: " . site_url('admin/login'));
@@ -260,7 +262,7 @@ class Admin extends CI_Controller {
         $this->load->view('service');
         $this->load->view('template/footer');
       }
-      print_r($data);
+      // print_r($data);
     } else {
       header("location: " . site_url('admin/login'));
     }
