@@ -30,7 +30,7 @@ class Employee_model extends CI_Model {
 
 
 		//Main query
-		$selectmain = "employee.employee_id, CONCAT(employee.employee_name_title, ' ', `employee`.`employee_firstname`, ' ', employee.employee_lastname) AS 'employee_name', satisfication.amount_customer,satisfication.score_0,satisfication.score_1,satisfication.score_2,satisfication.score_3,satisfication.score_4,  satisfication.score_5,satisfication.total_score,satisfication.score_averange,satisfication.satisfaction_percent";
+		$selectmain = "employee.employee_id, CONCAT(employee.employee_name_title, ' ', `employee`.`employee_firstname`, ' ', employee.employee_lastname) AS 'employee_name', coalesce(satisfication.amount_customer, 0) AS 'amount_customer', coalesce(satisfication.score_0, 0) AS 'score_0',coalesce(satisfication.score_1, 0) AS 'score_1',coalesce(satisfication.score_2, 0) AS 'score_2',coalesce(satisfication.score_3, 0) AS 'score_3',coalesce(satisfication.score_4, 0) AS 'score_4',  coalesce(satisfication.score_5, 0) AS 'score_5',coalesce(satisfication.total_score, 0) AS 'total_score',coalesce(satisfication.score_averange, 0.00) AS 'score_averange',coalesce(satisfication.satisfaction_percent, 0.00) AS 'satisfaction_percent'";
 
 		$this->db->select($selectmain);
 		$this->db->from('employee');
@@ -87,8 +87,8 @@ class Employee_model extends CI_Model {
 		//Main query
 		$select_employee = "employee.employee_id, CONCAT(employee.employee_name_title, ' ', employee.employee_firstname, ' ', employee.employee_lastname) AS 'employee_name'"; // AS employee
 		// $select_login_time = "login.work_all_time_by_login"; // AS login
-		$select_amount_customer = "amount.amount_customer, amount.success_service, amount.fail_service"; // AS amount
-		$select_work_time = "work.averange_work_time, work.max_work_time, work.work_all_time_by_employee"; // AS work
+		$select_amount_customer = "coalesce(amount.amount_customer, 0) AS 'amount_customer', coalesce(amount.success_service, 0) AS 'success_service', coalesce(amount.fail_service, 0) AS 'fail_service'"; // AS amount
+		$select_work_time = "coalesce(work.averange_work_time, '00:00:00') AS 'averange_work_time', coalesce(work.max_work_time, '00:00:00') AS 'max_work_time', coalesce(work.work_all_time_by_employee, '00:00:00') AS 'work_all_time_by_employee'"; // AS work
 
 		$this->db->select($select_employee . ', '  . $select_amount_customer . ', ' . $select_work_time);
 		$this->db->from('employee');
@@ -104,7 +104,7 @@ class Employee_model extends CI_Model {
 	}
 
 	function get_queue_log_data($startdate, $enddate=""){
-		$selectmain = "queue_log.queue_log_id, queue_log.counter_id, queue_log.employee_id, CONCAT(employee.employee_name_title, ' ', employee.employee_firstname, ' ', employee.employee_lastname) AS 'employee_name', CONCAT(queue_type_id, queue_number) AS 'queue', ca_log.ca, queue_log.queue_create_time, TIMEDIFF(time_score.start_service_time, queue_log.queue_create_time) AS 'wait_service_time', time_score.start_service_time, time_score.end_service_time, time_score.score";
+		$selectmain = "queue_log.counter_id, queue_log.employee_id, CONCAT(employee.employee_name_title, ' ', employee.employee_firstname, ' ', employee.employee_lastname) AS 'employee_name', CONCAT(queue_type_id, queue_number) AS 'queue', ca_log.ca, queue_log.queue_create_time, TIMEDIFF(time_score.start_service_time, queue_log.queue_create_time) AS 'wait_service_time', time_score.start_service_time, time_score.end_service_time, time_score.score";
 
 		$this->db->select($selectmain);
 		$this->db->from('queue_log');

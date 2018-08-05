@@ -34,6 +34,56 @@
           }
         })
       })
+      var base_url = "<?php echo base_url()?>";
+      function export_satisfication(){
+        var daterange = $("#daterange").val();
+        console.log(daterange);
+        var url = base_url + "admin/ajax_export_satisfication";
+        $.ajax({
+          method: "POST",
+          url: url,
+          data: { 
+            daterange: daterange
+          }
+        })
+          .done(function( link ) {
+            window.open(link , '_blank');
+        });
+      }
+
+       function export_analyze(){
+        var daterange = $("#daterange").val();
+        console.log(daterange);
+        var url = base_url + "admin/ajax_export_analyze";
+        $.ajax({
+          method: "POST",
+          url: url,
+          data: { 
+            daterange: daterange
+          }
+        })
+          .done(function( link ) {
+            window.open(link , '_blank');
+        });
+
+      }
+
+       function export_queue_log(){
+        var daterange = $("#daterange").val();
+        console.log(daterange);
+        var url = base_url + "admin/ajax_export_queue_log";
+        $.ajax({
+          method: "POST",
+          url: url,
+          data: { 
+            daterange: daterange
+          }
+        })
+          .done(function( link ) {
+            window.open(link , '_blank');
+        });
+
+      }
     </script>
   </body>
 </html>

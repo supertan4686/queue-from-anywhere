@@ -31,7 +31,7 @@
             <button class="btn btn-primary btn-block"><i class="fa fa-search"></i> &nbsp; &nbsp;ค้นหา</button>
           </div>
           <div class="col-xs-2">
-            <button class="btn btn-success btn-block"><i class="fa fa-table"></i> &nbsp; &nbsp;Export Excel</button>
+            <button class="btn btn-success btn-block" type="button" onclick="export_satisfication()"><i class="fa fa-table"></i> &nbsp; &nbsp;Export Excel</button>
           </div>
         </div>
       </form>

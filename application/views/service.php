@@ -41,8 +41,6 @@
                   <tr>
                     <th>ชื่อกลุ่มงานบริการ</th>
                     <th>รหัสหน้ากลุ่มงานบริการ</th>
-                    <th>คิวเริ่มต้น</th>
-                    <th>คิวสุดท้าย</th>
                     <th>การแก้ไข</th>
                   </tr>
                 </thead>
@@ -50,13 +48,11 @@
                   <?php
                   foreach ($a_service as $index => $service) { ?>
                     <tr>
-                      <td><?php echo $service['service_name'];?></td>
-                      <td><?php echo $service['service_id'];?></td>
-                      <td><?php echo $service['service_start_queue'];?></td>
-                      <td><?php echo $service['service_end_queue'];?></td>
+                      <td><?php echo $service['queue_type_name'];?></td>
+                      <td><?php echo $service['queue_type_id'];?></td>
                       <td>
-                        <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#formServiceModal" onclick="get_service('<?php echo $service['service_id'];?>');">แก้ไข</button>
-                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal" onclick="set_service_to_delete('<?php echo $service['service_id'];?>')">ลบ</button>
+                        <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#formServiceModal" onclick="get_service('<?php echo $service['queue_type_id'];?>');">แก้ไข</button>
+                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal" onclick="set_service_to_delete('<?php echo $service['queue_type_id'];?>')">ลบ</button>
                       </td>
                     </tr>
                   <?php
@@ -90,36 +86,21 @@
                 <div class="box-body">
                   <!-- ชื่อกลุ่มงานบริการ -->
                   <div class="form-group">
-                    <label for="service_name" class="col-sm-3 control-label">ชื่อกลุ่มงานบริการ</label>
+                    <label for="queue_type_name" class="col-sm-3 control-label">ชื่อกลุ่มงานบริการ</label>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="service_name" name="service_name" placeholder="">
+                      <input type="text" class="form-control" id="queue_type_name" name="queue_type_name" placeholder="">
                     </div>
                   </div>
                   <!-- /.จบชื่อกลุ่มงานบริการ -->
                   <!-- รหัสหน้ากลุ่มงานบริการ -->
                   <div class="form-group">
-                    <label for="service_id" class="col-sm-3 control-label">รหัสหน้ากลุ่มงานบริการ</label>
+                    <label for="queue_type_id" class="col-sm-3 control-label">รหัสหน้ากลุ่มงานบริการ</label>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="service_id" name="service_id" placeholder="">
+                      <input type="text" class="form-control" id="queue_type_id" name="queue_type_id" placeholder="">
                     </div>
                   </div>
                   <!-- /.จบรหัสหน้ากลุ่มงานบริการ -->
-                  <!-- คิวเริ่มต้น -->
-                  <div class="form-group">
-                    <label for="service_start_queue" class="col-sm-3 control-label">คิวเริ่มต้น</label>
-                    <div class="col-sm-9">
-                      <input type="number" class="form-control" id="service_start_queue" name="service_start_queue" placeholder="">
-                    </div>
-                  </div>
-                  <!-- /.จบริวเริ่มต้น -->
-                  <!-- คิวสุดท้าย -->
-                  <div class="form-group">
-                    <label for="service_end_queue" class="col-sm-3 control-label">คิวสุดท้าย</label>
-                    <div class="col-sm-9">
-                      <input type="number" class="form-control" id="service_end_queue" name="service_end_queue" placeholder="">
-                    </div>
-                  </div>
-                  <!-- /.จบคิวสุดท้าย -->
+                 
                 </div>
                 <!-- /.box-body -->
               </form>
@@ -148,7 +129,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-            <button type="button" class="btn btn-danger" onclick="delete_service('<?php echo $service['service_id'];?>');">ลบ</button>
+            <button type="button" class="btn btn-danger" onclick="delete_service('<?php echo $service['queue_type_id'];?>');">ลบ</button>
           </div>
         </div>
       </div>
@@ -165,20 +146,18 @@
     <script>
     var url = "<?php echo base_url();?>";
 
-    function get_service(service_id){
+    function get_service(queue_type_id){
       //Get Employee data
       $.ajax({
-        url: url +'admin/ajax_get_service_by_id?service_id=' + service_id,
+        url: url +'admin/ajax_get_service_by_id?queue_type_id=' + queue_type_id,
         type:'GET',
         success: function (result) {
           data = JSON.parse(result);
           // console.log(data);
           if(data.data != []) {
             var service = data.data;
-            $('#service_name').val(service.service_name);
-            $('#service_id').val(service.service_id);
-            $('#service_start_queue').val(service.service_start_queue);
-            $('#service_end_queue').val(service.service_end_queue);
+            $('#queue_type_name').val(service.queue_type_name);
+            $('#queue_type_id').val(service.queue_type_id);
           } else {
             alert('ไม่พบข้อมูลผู้ใช้');
           }
@@ -195,35 +174,35 @@
         success: function (result) {
           data = JSON.parse(result).data;
           if (data.type == 'insert' && data.result == 'success') {
-            window.location.replace(url + 'admin/service?act=insert&service=' + data.service_id);
+            window.location.replace(url + 'admin/service?act=insert&service=' + data.queue_type_id);
           } else if(data.type == 'update' && data.result == 'success'){
-            window.location.replace(url + 'admin/service?act=update&service=' + data.service_id);
+            window.location.replace(url + 'admin/service?act=update&service=' + data.queue_type_id);
           } else {
-            window.location.replace(url + 'admin/service?act=fail&service=' + data.service_id);
+            window.location.replace(url + 'admin/service?act=fail&service=' + data.queue_type_id);
           }
         }
       });
     }
 
-    function set_service_to_delete(service_id){
-      $('#service_delete').attr('value', service_id);
+    function set_service_to_delete(queue_type_id){
+      $('#service_delete').attr('value', queue_type_id);
     }
 
     function delete_service(){
-      var service_id = $('#service_delete').val();
+      var queue_type_id = $('#service_delete').val();
       $.ajax({
         url: url +'admin/ajax_delete_service',
         type:'POST',
         data: {
-          service_id: service_id
+          queue_type_id: queue_type_id
         },
         success: function (result) {
           data = JSON.parse(result).data;
           // console.log(data);
           if (data.type == 'delete' && data.result == 'success') {
-            window.location.replace(url + 'admin/service?act=delete&service=' + data.service_id);
+            window.location.replace(url + 'admin/service?act=delete&service=' + data.queue_type_id);
           } else {
-            window.location.replace(url + 'admin/service?act=fail&service=' + data.service_id);
+            window.location.replace(url + 'admin/service?act=fail&service=' + data.queue_type_id);
           }
         }
       });
@@ -231,9 +210,9 @@
 
     function init_new_form(){
       // console.log('clear_form')
-      $('#service_name').val('');
-      $('#service_id').val('');
-      $('#service_start_queue').val('');
-      $('#service_end_queue').val('');
+      $('#queue_type_name').val('');
+      $('#queue_type_id').val('');
+      // $('#service_start_queue').val('');
+      // $('#service_end_queue').val('');
     }
   </script>

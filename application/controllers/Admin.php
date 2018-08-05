@@ -1,5 +1,13 @@
 <?php
 include(FCPATH . 'assets/phpqrcode/qrlib.php');
+require_once FCPATH. 'assets/spout-2.7.3/src/Spout/Autoloader/autoload.php';
+use Box\Spout\Common\Type;
+use Box\Spout\Writer\Style\Border;
+use Box\Spout\Writer\Style\BorderBuilder;
+use Box\Spout\Writer\Style\Color;
+use Box\Spout\Writer\Style\StyleBuilder;
+use Box\Spout\Writer\WriterFactory;
+
 
 class Admin extends CI_Controller {
   
@@ -54,6 +62,8 @@ class Admin extends CI_Controller {
         $this->load->view('template/sidebar_admin');
         $this->load->view('satisfication');
         $this->load->view('template/footer');
+
+        print_r($a_employee_data);
       }
     } else {
       header("location: " . site_url('admin/login'));
@@ -96,6 +106,8 @@ class Admin extends CI_Controller {
         $this->load->view('template/sidebar_admin');
         $this->load->view('analyze');
         $this->load->view('template/footer');
+        print_r($a_analyze_data);
+
       }
     } else {
       header("location: " . site_url('admin/login'));
@@ -139,6 +151,7 @@ class Admin extends CI_Controller {
         $this->load->view('template/sidebar_admin');
         $this->load->view('queue_log');
         $this->load->view('template/footer');
+        print_r($queue_log);
       }
     } else {
       header("location: " . site_url('admin/login'));
@@ -247,6 +260,7 @@ class Admin extends CI_Controller {
         $this->load->view('service');
         $this->load->view('template/footer');
       }
+      print_r($data);
     } else {
       header("location: " . site_url('admin/login'));
     }
@@ -330,8 +344,8 @@ class Admin extends CI_Controller {
   }
 
   public function ajax_get_service_by_id(){
-    $service_id = $this->input->get('service_id');
-    $service_data = $this->Service_model->get_service_data_by_id($service_id);
+    $queue_type_id = $this->input->get('queue_type_id');
+    $service_data = $this->Service_model->get_service_data_by_id($queue_type_id);
     if ($service_data != NULL){
       return echo_json($service_data);
     } else {
@@ -341,14 +355,14 @@ class Admin extends CI_Controller {
 
   public function ajax_submit_service(){
     $data = $this->input->post();
-    $checkexistservice = $this->Service_model->check_exist_service($data['service_id']);
+    $checkexistservice = $this->Service_model->check_exist_service($data['queue_type_id']);
     if($checkexistservice == 0){
       //Insert
       $this->Service_model->insert_new_service($data);
       $result = array(
         'type' => 'insert',
         'result' => 'success',
-        'service_id' => $data['service_id']
+        'queue_type_id' => $data['queue_type_id']
       );
     } else {
       //Update
@@ -356,7 +370,7 @@ class Admin extends CI_Controller {
       $result = array(
         'type' => 'update',
         'result' => 'success',
-        'service_id' => $data['service_id']
+        'queue_type_id' => $data['queue_type_id']
       );
     }
 
@@ -364,13 +378,85 @@ class Admin extends CI_Controller {
   }
 
   public function ajax_delete_service(){
-    $service_id = $this->input->post('service_id');
-    $this->Service_model->delete_service($service_id);
+    $queue_type_id = $this->input->post('queue_type_id');
+    $this->Service_model->delete_service($queue_type_id);
     $result = array(
       'type' => 'delete',
       'result' => 'success',
-      'service_id' => $service_id);
+      'queue_type_id' => $queue_type_id);
     return echo_json($result);
+  }
+
+  public function ajax_export_satisfication(){
+    $dateinput = $this->input->post('daterange');
+    if($dateinput == ""){
+      $startdate = $this->date;
+      $enddate = $this->date;
+    } else {
+      $daterange = explode(" ", $dateinput);
+      $startdate = $daterange[0];
+      $enddate = $daterange[2];
+    }
+
+    if($startdate == $enddate){
+      $a_employee_data = $this->Employee_model->get_satisfication_employee_data($startdate);
+    } else {
+      $a_employee_data = $this->Employee_model->get_satisfication_employee_data($startdate, $enddate);
+    }
+
+    $filename = "employee_satisfication_data_" . $dateinput . ".xlsx";
+    $a_header = ["employee_id", "employee_name", "amount_customer", "score_0", "score_1", "score_2", "score_3", "score_4", "score_5", "total_score", "score_averange", "satisfaction_percent"];
+    $link = $this->_create_excel($filename, $a_employee_data, $a_header);
+    echo $link;
+
+  }
+
+  public function ajax_export_analyze(){
+    $dateinput = $this->input->post('daterange');
+    if($dateinput == ""){
+      $startdate = $this->date;
+      $enddate = $this->date;
+    } else {
+      $daterange = explode(" ", $dateinput);
+      $startdate = $daterange[0];
+      $enddate = $daterange[2];
+    }
+
+    if($startdate == $enddate){
+      $a_analyze_data = $this->Employee_model->get_analyze_employee_data($startdate);
+    } else {
+      $a_analyze_data = $this->Employee_model->get_analyze_employee_data($startdate, $enddate);
+    }     
+    
+    $filename = "employee_analyze_data_" . $dateinput . ".xlsx";
+    $a_header = ["employee_id", "employee_name", "amount_customer", "success_service", "fail_service", "averange_work_time", "max_work_time", "work_all_time_by_employee"];
+    $link = $this->_create_excel($filename, $a_analyze_data, $a_header);
+    echo $link;
+
+  }
+
+  public function ajax_export_queue_log(){
+    $dateinput = $this->input->post('daterange');
+    if($dateinput == ""){
+      $startdate = $this->date;
+      $enddate = $this->date;
+    } else {
+      $daterange = explode(" ", $dateinput);
+      $startdate = $daterange[0];
+      $enddate = $daterange[2];
+    }
+
+    if($startdate == $enddate){
+      $queue_log = $this->Employee_model->get_queue_log_data($startdate);
+    } else {
+      $queue_log = $this->Employee_model->get_queue_log_data($startdate, $enddate);
+    }
+
+    $filename = "queue_log_data_" . $dateinput . ".xlsx";
+    $a_header = ["counter_id", "employee_id", "employee_name", "queue", "ca", "queue_create_time", "wait_service_time", "start_service_time", "end_service_time", "score"];
+    $link = $this->_create_excel($filename, $queue_log, $a_header);
+    echo $link;
+
   }
 
   public function get_qrcode_employee(){
@@ -426,6 +512,34 @@ class Admin extends CI_Controller {
       return false;
     }
   }
+
+	private function _create_excel($filename, $a_data, $a_header){
+		// Check sheets folder in project
+		if(!in_array("export", scandir(FCPATH))){
+			mkdir(FCPATH. "export", 0755);
+		}
+		$filePath = FCPATH . 'export/' . $filename;
+    $writer = WriterFactory::create(Type::XLSX); // for XLSX files
+		$writer->openToFile($filePath); // write data to a file or to a PHP stream
+		$sheet = $writer->getCurrentSheet();
+		$sheet_no = 1;
+		$sheet->setName('Page_' . $sheet_no);
+		$writer->addRow($a_header);
+		$rowdata = 0;
+    foreach ($a_data as $key => $data) {
+      $writer->addRow($data);
+      $rowdata++;
+      if($rowdata % 10000 == 0){
+        $sheet_no++;
+        $sheet = $writer->addNewSheetAndMakeItCurrent();
+        $sheet->setName('Page_' . $sheet_no);    
+        $writer->addRow($header);
+      }
+		}
+    $writer->close();
+    $link = base_url() . 'export/' . $filename;
+		return $link;
+	}
 
 }
 

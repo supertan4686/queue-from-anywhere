@@ -53,7 +53,7 @@
                       <td><?php echo $employee['employee_name_title'] . ' ' . $employee['employee_firstname'] . ' ' . $employee['employee_lastname'] ?></td>  
                       <td><?php echo $employee['position'];?></td>
                       <td>
-                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#qrcodeModal" onclick="get_qrcode_employee('<?php echo $employee['employee_id'];?>');"><i class="fa fa-qrcode"></i> QR Code</button>
+                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#qrcodeModal" onclick="get_qrcode_employee('<?php echo $employee['employee_id'];?>');"><i class="fa fa-barcode"></i> Barcode</button>
                         <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#formEmployeeModal" onclick="get_employee('<?php echo $employee['employee_id'];?>');">แก้ไข</button>
                         <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal" onclick="set_employee_to_delete('<?php echo $employee['employee_id'];?>')">ลบ</button>
                       </td>
@@ -194,7 +194,7 @@
     var url = "<?php echo base_url();?>";
 
     function get_qrcode_employee(employee_id){
-      $('#qrcodeLabel').text('QR Code พนักงานรหัส ' + employee_id);
+      $('#qrcodeLabel').text('Barcode พนักงานรหัส ' + employee_id);
       $('#imgqrcode').attr('src', url + 'admin/get_qrcode_employee?id=' + employee_id);
       $('#linkqrcode').attr('href', url + 'admin/get_qrcode_employee?id=' + employee_id).attr('download', employee_id + '.png');
     }
