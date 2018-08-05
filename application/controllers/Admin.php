@@ -141,7 +141,7 @@ class Admin extends CI_Controller {
           $queue_log = $this->Employee_model->get_queue_log_data($startdate, $enddate);
         }
 
-        echo $this->db->last_query();
+        // echo $this->db->last_query();
 
         $data = array(
           'pageactive' => 'queue',
