@@ -175,7 +175,7 @@
                 <img src="" name="imgbarcode" id="imgbarcode">
             </div>
             <div class="row" style="text-align: center;">
-              <a class="btn btn-primary" href="" download="" name="linkbarcode" id="linkbarcode">ดาวน์โหลด Barcode</a>
+              <a class="btn btn-primary" href="" download="" name="linkbarcode" id="linkbarcode" target="_blank">ดาวน์โหลด Barcode</a>
             </div>
           </div>
         </div>
@@ -195,14 +195,17 @@
 
     function get_qrcode_employee(employee_id){
       $('#qrcodeLabel').text('Barcode พนักงานรหัส ' + employee_id);
-      $.ajax({
-        url: url +'admin/get_barcode_employee?employee_id=' + employee_id,
-        type:'GET',
-        success: function (result) {
-          $('#imgbarcode').attr('src', result);
-          $('#linkbarcode').attr('href', result).attr('download', employee_id + '.png');
-        }
-      });
+      // $.ajax({
+      //   url: url +'admin/get_barcode_employee?employee_id=' + employee_id,
+      //   type:'GET',
+      //   success: function (result) {
+      //     $('#imgbarcode').attr('src', result);
+      //     $('#linkbarcode').attr('href', result).attr('download', employee_id + '.png');
+      //   }
+      // });
+      var result = "https://barcode.tec-it.com/barcode.ashx?data=" + employee_id + "&code=Code128&multiplebarcodes=false&translate-esc=false&unit=Fit&dpi=96&imagetype=Gif&rotation=0&color=%23000000&bgcolor=%23ffffff&qunit=Mm&quiet=0%27%20alt=%27Barcode%20Generator%20TEC-IT%27";
+      $('#imgbarcode').attr('src', result);
+      $('#linkbarcode').attr('href', result).attr('download', employee_id + '.gif');
     }
 
     function get_employee(employee_id){
